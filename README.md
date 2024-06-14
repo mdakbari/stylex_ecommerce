@@ -96,7 +96,7 @@ Install Python 3.7
 
 > 👉 **Step 1** - Download the code from the GitHub repository:
 ```bash
-git clone https://github.com/mdakbari/stylex.git 
+git clone https://github.com/mdakbari/stylex_ecommerce.git 
 ```
 
 > 👉 **Step 2** - Navigate to the project directory:

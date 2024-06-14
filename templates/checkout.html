@@ -1,0 +1,326 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} StyleX - Checkout{% endblock %}
+ 
+{% block body %}
+
+    
+<div class="wraper">
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div cl
+                    ass="col-12">
+                        <nav class="breadcrumb-link">
+                            <a href="{% url 'home' %}">Home</a>
+                            
+                            <a href="{% url 'cart' %}">Cart</a>
+                            <span>Checkout</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section class="content-page">
+            <div class="container mb-80">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <article class="post-8">
+                            
+                            <form class="product-checkout mt-45" method='POST' action= "/address/" onsubmit="return validateAddressForm()">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3>Billing details</h3>
+                                        <div class="row">
+                                            
+                                        <form class="product-checkout mt-45" method='POST' action= "/address/">
+                                                {% csrf_token %}
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_first_name" class="left">
+                                                    First Name
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="first_name" title="First Name" value="{{ firstname }}" placeholder="First Name" type="text" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_last_name" class="left">
+                                                    Last Name
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="last_name" title="Last Name" value="{{lastname}}" placeholder="Last Name" type="text" required>
+                                            </div>
+                                            
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_address" class="left">
+                                                    Address
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width mb-20" name="address" title="Address" value="{{ user_address.street_address }}" placeholder="Street Address" type="text" required>
+                                                {% comment %} <input class="input-md form-full-width" name="address" title="Address" value="" placeholder="Apartment, suite, unit etc. (optional)" type="text" required="" aria-required="true"> {% endcomment %}
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_town_city" class="left">
+                                                    Town / City
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="city" title="Town / City" value="{{ user_address.city}}" placeholder="" type="text" required>
+                                            </div>
+
+                                            
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_country" class="left">
+                                                    County
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <select name="country" id="billing_country" class="input-md form-full-width" autocomplete="country" tabindex="-1" aria-hidden="true" required>
+                                                    <option value="{{user_address.country}}">Select a country�</option>
+
+                                                    <option value="india" selected="selected">India</option>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_state" class="left">
+                                                    State
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+
+                                                <select name="state" id="state" class="input-md form-full-width" autocomplete="address-level1" data-placeholder="" tabindex="-1" aria-hidden="true" required>
+                                                    {% if user_address.state %}
+                                                                <option value="{{ user_address.state.pk }}" selected>{{ user_address.state.state_name }}</option>
+                                                    {% else %}
+                                                        <option value="" selected disabled>Select a state</option>
+                                                    {% endif %}
+                                                        {% for states in state %}
+                                                        <option value="{{ states.pk }}">{{ states.state_name}}</option>
+                                                    {% endfor %}
+             
+                                                   
+                                                </select>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_postcode" class="left">
+                                                    Postcode / ZIP
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="pincode" title="Postcode" value="{{user_address.pincode}}" placeholder="" type="text" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_phone" class="left">
+                                                    Phone
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="phone" title="phone" value="{{user_address.phone_number}}" placeholder="(+00) 123 456 7890" type="tel" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_email" class="left">
+                                                    Email
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="email" title="Enter Email" value="{{ user.user_email}}" placeholder="Enter Email" type="email" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-lg btn-color form-full-width" >Add Address</button>
+                                        </form>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="checkout-order-review">
+                                            <h3>Your order</h3>
+                                            <div class="product-checkout-review-order">
+                                                <div class="responsive-table">
+                                                    <table class="">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="product-name">Product</th>
+                                                                <th class="product-total">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for item in users %}
+                                                            <tr class="cart_item">
+            
+                                                                {% comment %} <input type="hidden" name="after_shipping_price" value="{{ after_shipping_price }}"> {% endcomment %}
+
+                                                                <td class="product-name">{{ item.subproduct.product.name }} - {{item.color}} {{item.size}}<strong> x {{ item.quantity }}</strong> </td>
+                                                                <td class="product-total">
+                                                                    <span class="product-price-amount amount">
+                                                                        {% if 'USD' in request.session.currency %}
+                                                                        $ {{ item.total_price_usd|floatformat:2 }}
+                                                                {% else %}
+                                                                        ₹ {{ item.total_price|floatformat:2 }}
+                                                                {% endif %}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                            {% comment %} <tr class="cart_item">
+                                                                <td class="product-name">Red Printed Round Neck T-Shirt<strong> x 2</strong></td>
+                                                                <td class="product-total">
+                                                                    <span class="product-price-amount amount"><span class="currency-sign">₹</span>598.00</span>
+                                                                </td>
+                                                            </tr> {% endcomment %}
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr class="cart-subtotal">
+                                                                <th>Subtotal</th>
+                                                                <td>
+                                                                    <strong><span class="product-price-amount amount">
+                                                                        {% if 'USD' in request.session.currency %}
+                                                                        ${{ total_cart_price_usd|floatformat:2 }}
+                                                                      {% else %}
+                                                                        ₹{{ total_cart_price|floatformat:2 }}
+                                                                      {% endif %} 
+                                                                    </span></strong>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="shipping">
+                                                                <th>Shipping</th>
+                                                                <td>
+                                                                    <ul id="shipping_method">
+                                                                        <li>
+                                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_flat_rate" value="legacy_flat_rate" class="shipping_method" checked="checked" type="radio">
+                                                                            <label for="shipping_method_0_legacy_flat_rate">
+                                                                                Flat Rate: 
+                                                                                <span class="woocommerce-Price-amount amount"> {% if 'USD' in request.session.currency %}
+                                                                                    ${{ shipping_price_usd|floatformat:2 }}
+                                                                                  {% else %}
+                                                                                    ₹{{ shipping_price|floatformat:2 }}
+                                                                                  {% endif %}</span></label></span></label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_free_shipping" value="legacy_free_shipping" class="shipping_method" type="radio">
+                                                                            <label for="shipping_method_0_legacy_free_shipping">Free Shipping</label>
+                                                                        </li>
+                                                                        <li>
+                                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_local_delivery" value="legacy_local_delivery" class="shipping_method" type="radio">
+                                                                            <label for="shipping_method_0_legacy_local_delivery">Local Delivery</label>
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="order-total">
+                                                                <th>Total</th>
+                                                                <td>
+                                                                    <span class="product-price-amount amount">
+                                                                        {% if 'USD' in request.session.currency %}
+                                                        ${{ after_shipping_price_usd|floatformat:2 }}
+                                                      {% else %}
+                                                        ₹{{ after_shipping_price|floatformat:2 }}
+                                                      {% endif %}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+
+                                                <div class="product-checkout-payment">
+                                                    <ul>
+                                                        {% comment %} <li>
+                                                            <input id="payment_method_bacs" name="payment_method" value="bacs" checked="checked" type="radio" />
+                                                            <label for="payment_method_bacs">Direct Bank Transfer</label>
+                                                            <div class="payment_box payment_method_bacs">
+                                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
+                                                            </div>
+                                                        </li> {% endcomment %}
+                                                        {% comment %} <li>
+                                                            <input id="payment_method_cheque" name="payment_method" value="cheque" type="radio" />
+                                                            <label for="payment_method_cheque">Check payments</label>
+                                                        </li> {% endcomment %}
+                                                        <li>
+                                                            <input id="payment_method_cod" name="payment_method" value="cod" type="radio" />
+                                                            <label for="payment_method_cod">Cash on Delivery</label>
+                                                        </li>
+                                                        {% comment %} <li>
+                                                            <input id="payment_method_paypal" name="payment_method" value="paypal" type="radio" />
+                                                            <label for="payment_method_paypal">
+                                                                PayPal<img class="paypal-img" src="../../../www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png" />
+                                                                <a href="https://www.paypal.com/gb/webapps/mpp/paypal-popup" onclick="javascript:window.open('https://www.paypal.com/gb/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">What is PayPal?</a>
+                                                            </label>
+                                                        </li> {% endcomment %}
+                                                    </ul>
+                                                    <div class="place-order">
+                                                        <a class="btn btn-lg btn-color form-full-width" onclick="return checkBeforePlaceOrder()">Place Order</a>
+                                                        {% comment %} <button type="submit" class="btn btn-lg btn-color form-full-width" >Place Order</button> {% endcomment %}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% comment %} </form> {% endcomment %}
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- End Page Content -->
+
+        <script>
+
+            function checkBeforePlaceOrder() {
+                if (validateAddressForm()) {
+                    
+                    Swal.fire({
+                        title: "Are you sure you want to proceed ?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, place the order!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Place the order logic here
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Your order has been placed successfully.',
+                                showConfirmButton: false,
+                            });
+                            window.location.href = "/placeorder/";
+                        }
+                    });
+                    return true;
+                } else {
+                    // If validation fails, prevent navigation
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Please fill in all required fields in the address forms.',
+                    });
+
+                    return false;
+                }
+            }
+        
+            function validateAddressForm() {
+                // Your existing validation logic for the address form
+                // Example: Check if required fields are filled
+                var firstName = document.querySelector('[name="first_name"]').value.trim();
+                var lastName = document.querySelector('[name="last_name"]').value.trim();
+                var address = document.querySelector('[name="address"]').value.trim();
+                var city = document.querySelector('[name="city"]').value.trim();
+                var country = document.querySelector('[name="country"]').value.trim();
+                var state = document.querySelector('[name="state"]').value.trim();
+                var pincode = document.querySelector('[name="pincode"]').value.trim();
+                var phone = document.querySelector('[name="phone"]').value.trim();
+                var email = document.querySelector('[name="email"]').value.trim();
+
+        
+                if (firstName === '' || lastName === '' || address === ''|| city === '' || country === '' || state === '' || pincode === '' || phone === '' || email === '') {
+                    return false; // Validation failed
+                } else {
+                    return true; // Validation passed
+                }
+            }
+
+        </script>
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+       
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    </div>
+<div>
+
+{% endblock %}

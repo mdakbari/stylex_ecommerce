@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Not Found</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .error-code {
+            font-size: 200px;
+            animation: bounce 1s infinite;
+        }
+        .error-text {
+            font-size: 24px;
+            color: #34b79d;
+            padding-bottom: 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #34b79d;
+            font-size: 20px;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-5px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-code">404</div>
+        <div class="error-text">Page Not Found</div>
+        <a href="/">Go Home</a>
+    </div>
+    
+</body>
+</html>

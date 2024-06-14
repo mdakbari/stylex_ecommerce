@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <!-- meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Voxo admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, Voxo admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+
+    <!-- Google font -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&amp;family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&amp;display=swap">
+
+    <!-- Linear Icon css -->
+    <link rel="stylesheet" href="{% static 'assets/css/linearicon.css' %}">
+
+    <!-- Fontawesome css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/font-awesome.css' %}">
+
+    <!-- Themify icon css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/themify.css' %}">
+
+    <!-- ratio css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/ratio.css' %}">
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/scrollbar.css' %} ">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/animate.css' %} ">
+
+
+    <!--Dropzon css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/dropzone.css' %}">
+
+    <!-- Feather icon css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/feather-icon.css' %}">
+
+    <!-- Select2 css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/select2.min.css' %}">
+
+    <!-- Plugins css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/scrollbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/chartist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/date-picker.css' %}">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}">
+
+    <!-- Bootstrap-tag input css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap-tagsinput.css' %}">
+
+    <!-- App css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
+    <!-- Responsive css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/responsive.css' %}">
+
+</head>
+
+<body>
+    <!-- tap on top start -->
+    <div class="tap-top">
+        <span class="lnr lnr-chevron-up"></span>
+    </div>
+    <!-- tap on tap end -->
+
+    <!-- page-wrapper start -->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header start -->
+        <div class="page-header">
+            <div class="header-wrapper row m-0">
+                <div class="header-logo-wrapper col-auto p-0">
+                    <div class="logo-wrapper">
+                        
+                    </div>
+                    <div class="toggle-sidebar">
+                        <i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
+                    </div>
+                </div>
+
+
+                <div class="nav-right col-12 pull-right right-header p-0">
+
+                    
+                    <ul class="nav-menus">
+                        <li>
+                            <h1 class="" style="text-align=start">Admin Panel</h1>
+                        
+                        <li>
+                            <span class="header-search">
+                                <span class="lnr lnr-magnifier"></span>
+                            </span>
+                        </li>
+                      
+                        <li>
+                            <div class="mode">
+                                <span class="lnr lnr-moon"></span>
+                            </div>
+                        </li>
+
+                        
+                       
+                        <li class="profile-nav onhover-dropdown pe-0 me-0">
+                            <div class="media profile-media">
+                                <img class="user-profile rounded-circle" src="/static/assets/images/users/4.jpg" alt="">
+                                <div class="user-name-hide media-body">
+                                    <span>Manthan Akbari</span>
+                                    <p class="mb-0 font-roboto">Admin<i class="middle fa fa-angle-down"></i></p>
+                                </div>
+                            </div>
+                            <ul class="profile-dropdown onhover-show-div">
+                              
+                                <li>
+                                    <form action="{% url 'admin_logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">
+                                                    
+                                            <a href="">
+                                                <i data-feather="log-out"></i>
+                                                <span>Log out</span>
+                                            </a>
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header end -->
+
+        <!-- Page Body start -->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            <div class="sidebar-wrapper">
+                <div>
+                    <div class="logo-wrapper logo-wrapper-center">
+                       
+                        <div class="back-btn">
+                            <i class="fa fa-angle-left"></i>
+                        </div>
+                        <div class="toggle-sidebar">
+                            <i class="status_toggle middle sidebar-toggle" data-feather="grid"></i>
+                        </div>
+                    </div>
+                    <div class="logo-icon-wrapper">
+                        <a href="index-2.html">
+                            <img class="img-fluid main-logo" src="" alt="logo">
+                        </a>
+                    </div>
+                    <nav class="sidebar-main">
+                        <div class="left-arrow" id="left-arrow">
+                            <i data-feather="arrow-left"></i>
+                        </div>
+
+                        <div id="sidebar-menu">
+                            <ul class="sidebar-links" id="simple-bar">
+                    
+                                <li class="sidebar-main-title sidebar-main-title-2">
+                                    <div>
+                                        <h6 class="lan-1">Application</h6>
+                                        <p class="lan-2">Ready To Use Apps</p>
+                                    </div>
+                                </li>
+                             
+{% comment %} 
+                                <li class="sidebar-list">
+                                    <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                        <i data-feather="users"></i>
+                                        <span>User</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li>
+                                            <a href="{% url "user_list" %}">User List</a>
+                                        </li>
+
+                                    </ul>
+                                </li> {% endcomment %}
+
+                                <li>
+                                    <a href="{% url "admin_dashboard" %}">
+                                        <i data-feather="home"></i>
+                                        <span>Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-list">
+                                    <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                        <i data-feather="plus-circle"></i>
+                                        <span>Inventory</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li>
+                                            <a href="{% url "add_category" %}">Add Category</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url "add_color" %}">Add Color</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url "add_size" %}">Add Size</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{% url "add_product" %}">Add New Products</a>
+                                        </li>
+                                        
+                                     
+                                    </ul>
+                                </li>
+                                
+                                <li class="sidebar-list">
+                                    <a class="linear-icon-link sidebar-link sidebar-title">
+                                        <i data-feather="box"></i>
+                                        <span>Product</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                       
+                                        <li>
+                                            <a href="{% url "allproduct" %}">Products</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="{% url "product_list" %}">Product List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                               
+                                {% comment %} <li class="sidebar-list">
+                                    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                        <i data-feather="archive"></i>
+                                            <span>Orders</span>
+                                    </a>
+                                    <ul class="sidebar-submenu">
+                                        <li>
+                                            <a href="{% url "order_list" %}">Order List</a>
+                                        </li>
+                                     
+                                    </ul>
+                                </li> {% endcomment %}
+                                <li>
+                                    <a href="{% url "order_list" %}">
+                                        <i data-feather="archive"></i>
+                                        <span>Orders</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url "contact_list" %}">
+                                        <i data-feather="phone"></i>
+                                        <span>Contact</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="right-arrow" id="right-arrow">
+                            <i data-feather="arrow-right"></i>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- Page Sidebar Ends-->
+
+            {% block body %} {% endblock %}
+            
+            <!-- Container-fluid End -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End -->
+
+   
+
+    <!-- latest js -->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js'%}"></script>
+
+    <!-- Bootstrap js -->
+    <script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js'%}"></script>
+
+    <!-- feather icon js -->
+    <script src="{% static 'assets/js/icons/feather-icon/feather.min.js'%}"></script>
+    <script src="{% static 'assets/js/icons/feather-icon/feather-icon.js'%}"></script>
+
+    <!-- scrollbar simplebar js -->
+    <script src="{% static 'assets/js/scrollbar/simplebar.js'%}"></script>
+    <script src="{% static 'assets/js/scrollbar/custom.js'%}"></script>
+
+    <!-- Sidebar js -->
+    <script src="{% static 'assets/js/config.js'%}"></script>
+
+    <!-- bootstrap tag-input js -->
+    <script src="{% static 'assets/js/bootstrap-tagsinput.min.js'%}"></script>
+    <script src="{% static 'assets/js/sidebar-menu.js'%}"></script>
+
+
+    <!--Dropzon js -->
+    <script src="{% static 'assets/js/dropzone/dropzone.js'%}"></script>
+    <script src="{% static 'assets/js/dropzone/dropzone-script.js'%}"></script>
+
+    <!-- Plugins js -->
+    {% comment %} <script src="{% static 'assets/js/notify/bootstrap-notify.min.js'%}"></script>
+    <script src="{% static 'assets/js/notify/index.js'%}"></script> {% endcomment %}
+
+    <!-- ck editor js -->
+    <script src="{% static 'assets/js/ckeditor.js'%}"></script>
+    <script src="{% static 'assets/js/ckeditor-custom.js'%}"></script>
+
+    <!-- select2 js -->
+    <script src="{% static 'assets/js/select2.min.js'%}"></script>
+    <script src="{% static 'assets/js/select2-custom.js'%}"></script>
+    <script src="{% static 'assets/js/chart/apex-chart/chart-custom1.js' %}"></script>
+
+   <!-- Apexchar js -->
+    <script src="{% static 'assets/js/chart/apex-chart/apex-chart1.js' %}"></script>
+    <script src="{% static 'assets/js/chart/apex-chart/moment.min.js"' %}"></script>
+   <script src="{% static 'assets/js/chart/apex-chart/apex-chart.js"' %}"></script>
+   <script src="{% static 'assets/js/chart/apex-chart/stock-prices.js' %}"></script>
+   <script src="{% static 'assets/js/chart/apex-chart/chart-custom1.js' %}"></script>
+   
+    <!-- Theme js -->
+    <script src="{% static 'assets/js/script.js'%}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% comment %} 
+{% block title %}Home{% endblock %}
+{% block content %} {% endcomment %}
+{% block body %}
+
+    
+<div class="wraper">
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="breadcrumb-link">
+                            <a href="#">Home</a>
+                            <span>Checkout</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section class="content-page">
+            <div class="container mb-80">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <article class="post-8">
+                            
+                            <form class="product-checkout mt-45" method='POST' action= "/address/">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>Billing details</h3>
+                                        <div class="row">
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_first_name" class="left">
+                                                    First Name
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="first_name" title="First Name" value="{{ firstname }}" placeholder="First Name" type="text" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_last_name" class="left">
+                                                    Last Name
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="last_name" title="Last Name" value="{{lastname}}" placeholder="Last Name" type="text" required>
+                                            </div>
+                                            
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_address" class="left">
+                                                    Address
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width mb-20" name="address" title="Address" value="" placeholder="Street Address" type="text" required>
+                                                {% comment %} <input class="input-md form-full-width" name="address" title="Address" value="" placeholder="Apartment, suite, unit etc. (optional)" type="text" required="" aria-required="true"> {% endcomment %}
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_town_city" class="left">
+                                                    Town / City
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="city" title="Town / City" value="" placeholder="" type="text" required>
+                                            </div>
+
+                                            
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_country" class="left">
+                                                    County
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <select name="country" id="billing_country" class="input-md form-full-width" autocomplete="country" tabindex="-1" aria-hidden="true" required>
+                                                    <option value="">Select a country�</option>
+
+                                                    <option value="india" selected="selected">India</option>
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_state" class="left">
+                                                    State
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+
+                                                <select name="state" id="state" class="input-md form-full-width" autocomplete="address-level1" data-placeholder="" tabindex="-1" aria-hidden="true" required>
+                                                    <option value="">Select a state�</option>
+                                                    {% for states in state %}
+                                                        <option value="{{ states.pk }}">{{ states.state_name}}</option>
+                                                    {% endfor %}
+             
+                                                   
+                                                </select>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-12">
+                                                <label for="billing_postcode" class="left">
+                                                    Postcode / ZIP
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="pincode" title="Postcode" value="" placeholder="" type="text" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_phone" class="left">
+                                                    Phone
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="phone" title="phone" value="" placeholder="(+00) 123 456 7890" type="tel" required>
+                                            </div>
+                                            <div class="form-field-wrapper form-center col-sm-6">
+                                                <label for="billing_email" class="left">
+                                                    Email
+                                                    <abbr class="form-required" title="required">*</abbr></label>
+                                                <input class="input-md form-full-width" name="email" title="Enter Email" value="{{ user.user_email}}" placeholder="Enter Email" type="email" required>
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+                                 
+                                </div>
+                            </form>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- End Page Content -->
+
+    </div>
+<div>
+
+{% endblock %}

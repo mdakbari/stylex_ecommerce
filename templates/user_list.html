@@ -1,0 +1,102 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+
+{% block title %}Order List{% endblock %}
+
+
+{% block body %}
+
+<div class="page-body-wrapper">
+ 
+    <!-- Order section Start -->
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Order List</h5>
+        </div>
+
+        <!-- Table Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi">
+                                    <table class="table table-striped all-package">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>User Name</th>
+                                                <th>Email</th>
+                                                <th>Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for user in users %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                               
+
+                                                <td>{{ user.name }}</td>
+                                                <td>{{ user.user_name}}</td>
+
+                                                <td>{{user.user_email}}</td>
+
+                                                {% comment %} <td class="order-success">
+                                                    <span></span>
+                                                </td> {% endcomment %}
+
+                                                <td>{{ user.created_at }}</td>
+                                            
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination Box Start -->
+                        <div class=" pagination-box">
+                            <nav class="ms-auto me-auto " aria-label="...">
+                                <ul class="pagination pagination-primary">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0)">Previous</a>
+                                    </li>
+
+                                    <li class="page-item active">
+                                        <a class="page-link" href="javascript:void(0)">1</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">2</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">3</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Pagination Box End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table End -->
+
+       
+    </div>
+    <!-- Order section End -->
+</div>
+
+
+{% endblock %}

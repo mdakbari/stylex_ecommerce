@@ -1,0 +1,233 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% comment %} 
+{% block title %}Home{% endblock %}
+{% block content %} {% endcomment %}
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #34b79d;
+        }
+        @media (max-width: 425px) {
+            h1 {
+                font-size: 24px;
+            }
+        }
+        .outerul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .outerli {
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .outerli:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        strong {
+            color: #34b79d;
+            cursor: pointer; /* Add cursor pointer to indicate clickable */
+        }
+        ul ul {
+            padding-left: 20px;
+        }
+        .product-image {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+        }
+        @keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.order-details {
+    display: none;
+    animation: slideDown 0.3s ease; /* Apply the slide-down animation */
+}
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .order-item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .order-details h3 {
+            margin-top: 20px;
+        }
+        
+        .order-item-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .product-image {
+            max-width: 100px;
+            max-height: 100px;
+            margin-left: 10px; /* Adjust margin as needed */
+        }
+        .order-id {
+            cursor: pointer;
+            
+        }
+        
+        .cancel {
+            background-color: #f44336;
+            color: white;
+            {% comment %} padding: 10px 20px; {% endcomment %}
+            border-radius: 40px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order History</h1>
+
+    {% if orders %}
+    <ul class="outerul">
+        {% for order_obj in orders %}   
+            <li class="outerli">
+                <div class="order-id">
+                    
+                    <strong>Order ID:</strong>
+                    <strong class="">{{ order_obj.order.order_id }}</strong><br>
+                    <strong>Order Date:</strong> {{ order_obj.order.order_date }}<br>
+                    <strong>Delivery Date:</strong> {{ order_obj.order.delivery_date }}<br>
+                    <strong>Order Status:</strong>
+
+                    {% if order_obj.order.order_status == "Cancelled" %}
+                        <span style="background-color: red; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order_obj.order.order_status }}</span><br>
+                    {% elif order_obj.order.order_status == "Delivered" %}
+                        <span style="background-color: green; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order_obj.order.order_status }}</span><br>
+                    {% elif order_obj.order.order_status == "Returned" %}
+                        <span style="background-color: yellow; color: black; padding:4px; border-radius:5px; font-size:12px">{{ order_obj.order.order_status }}</span><br>
+                  
+                    {% elif order_obj.order.order_status == "Pending" %}
+                        <span style="background-color: black; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order_obj.order.order_status }}</span><br>
+                    {% else %}
+                        {{ order_obj.order.order_status }}<br>
+                    {% endif %}
+
+                </div>
+                <!-- Add other fields you want to display -->
+                <div class="order-details">
+                    <h3>Order Items:</h3>
+                    <ul>
+                        {% for item in order_obj.items %}
+                            <li class="order-item">
+                                <div class="order-item-content">
+                                    <div class="order-item-details">
+                                        <strong>Product:</strong> {{ item.subproduct_id.product.name }}<br>
+                                        <strong>Color:</strong> {{ item.color }}<br>
+                                        <strong>Size:</strong> {{ item.size }}<br>
+                                        <strong>Quantity:</strong> {{ item.quantity }}<br>
+                                        <strong>Price:</strong>
+                                        {% if 'USD' in request.session.currency %}
+                                            $ {{ item.price_usd | floatformat:2 }}
+                                        {% else %}
+                                            ₹ {{ item.price_usd }}
+                                        {% endif %}
+                                        <br>
+                                    </div>
+                                    <img src="{{ item.subproduct_id.image }}" alt="{{ item.subproduct_id.product.name }}" class="product-image">
+                                </div>
+                            </li>
+                        {% endfor %}
+                            
+                        <h2>Shipping Information</h2>
+                        <h4>Shipping Address: </h4>
+                        <p>{{ order_obj.order.address_id.street_address }}, {{order_obj.order.address_id.city }}, {{ order_obj.order.address_id.state }}, {{order_obj.order.address_id.country }} - {{ order_obj.order.address_id.pincode }}</p>
+                        <p>Phone: {{ order_obj.order.address_id.phone_number }}</p>
+                        <p>Email: {{ order_obj.order.address_id.email }}</p>
+                        <p> Payment Mode: {{ order_obj.order.payment_mode }}</p>
+                            
+                        {% if order_obj.order.order_status == "Pending" %}
+                            <a  class="btn btn-lg cancel" href="{% url "cancel_order" order_obj.order.id %}" onclick="return confirmAction('cancel')">Cancle order</a>
+                        {% elif order_obj.order.order_status == "Delivered" %}
+                            <a  class="btn btn-lg cancel" href="{% url "return_order" order_obj.order.id %}" onclick="return confirmAction('cancel')">Return order</a>
+                        {% endif %}
+                    
+               
+
+                    </ul>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="responsive-table">
+        <div class="product-proceed-to-checkout mt-5 text-center">
+            <h3>Your Order History is Empty</h3>
+            <p>Looks like you haven't made any purchases yet</p>
+            <a class="btn btn-lg btn-black mb-5  explore-btn" href={% url "login" %}>
+                Explore Products
+            </a>
+        </div>    
+    </div>
+{% endif %}
+
+
+    <script>
+        // Add event listener to each order ID
+        document.querySelectorAll('.order-id').forEach(function(orderId) {
+            orderId.addEventListener('click', function() {
+                // Toggle visibility of next sibling with class 'order-details'
+                var orderDetails = orderId.parentNode.querySelector('.order-details');
+                orderDetails.style.display = orderDetails.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+        function confirmAction(action) {
+            return confirm('Are you sure you want to ' + action + ' this order?');
+        }
+
+    </script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}StyleX - {{category}} {% endblock %}
+
+{% block body %}
+    
+
+<script>
+    function showSuccessMessage() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Item added to cart',
+            showConfirmButton: false,
+            timer: 100000
+        });
+    }
+</script>
+
+<div class="wraper">
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section class="content-page">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Product Content -->
+                    <div class="col-12">
+                       
+                        {% if products|length == 0 %}
+                        <div class="product-proceed-to-checkout mt-5 text-center">
+                            <h3>No Products Found for "{{ search_query }}"</h3>
+                            <a class="btn btn-lg btn-black  explore-btn" href={% url "login" %}>
+                                Explore Products
+                            </a>
+                        </div>    
+                        {% else %}
+                        <!-- Product Grid -->
+                        <div class="row product-list-item">
+                            {% for pro in products %}
+                            <!-- item.1 -->
+                            <div class="product-item-element col-sm-6 col-md-4 col-lg-3">
+                                <!--Product Item-->
+                                <div class="product-item">
+                                    <div class="product-item-inner">
+                                        <div class="product-img-wrap sectionimg">
+                                            <a href="{% url 'show_product' pro.id %}"  >
+                                            <img src="{{ pro.image }}"  alt="">
+                                        </a>
+                                        </div>
+
+                                        <style>
+                                            .sectionimg{
+                                                height: 255px !important;
+                                                width: 255px !important;
+                                            }
+                                        </style>
+                                        <div class="product-button">
+                                            <form action="{% url 'addcart' pro.id %}" method="POST">
+                                                {% csrf_token %}         
+                                                
+                                                <input type="hidden" name="source_view" value="section">                                       
+                                                <button type="submit"  data-mode="top" name="sort_addcart" id="sbtn" onclick="showSuccessMessage()"  class="js_tooltip"  data-tip="Add To Cart"><i class="fa fa-shopping-bag"></i></button>
+                                            </form>
+                                            {% comment %} <a href="" class="js_tooltip" data-mode="top"><i class="fa fa-shopping-bag"></i></a> {% endcomment %}
+                                            {% comment %} <a href="#" class="js_tooltip" data-tip="Add To Whishlist"><i class="fa fa-heart"></i></a> {% endcomment %}
+
+                                            <style>
+                                                #sbtn{
+                                                border: none;
+                                                outline: none;
+                                                background-color: transparent !important;
+
+                                                }
+
+                                            </style>
+                                        </div>
+                                    </div>
+                                    <div class="product-detail">
+                                        <a class="tag" href="#">{{ pro.product.category.name }}</a>
+                                        <p class="product-title"><a href="product_detail.html">{{ pro.product.name }}</a></p>
+                                        <div class="product-rating">
+                                            <div class="star-rating" itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating" title="Rated 4 out of 5">
+                                                <span style="width: 60%"></span>
+                                            </div>
+                                            <a href="#" class="product-rating-count"><span class="count">3</span> Reviews</a>
+                                        </div>
+                                        <p class="product-description">
+                                            {{ pro.product.description }}
+                                        </p>
+                                            {% comment %} <h5 class="item-price">₹{{ pro.product.price }}</h5> {% endcomment %}
+                                                
+                                            <h5 class="item-price">
+                                                {% if 'USD' in request.session.currency %}
+                                                $ {{ pro.product.price_usd|floatformat:2 }}
+                                            {% else %}
+                                                ₹ {{ pro.product.price_usd|floatformat:2 }}
+                                            {% endif %}
+                                        </div>
+                                    
+                                </div>
+                                <!-- End Product Item-->
+                            </div>
+                            {% endfor %}
+
+                            <!-- item.2 -->
+
+                        </div>
+                        {% endif %}
+                        <!-- End Product Grid -->
+                       
+
+
+                    </div>
+                    <!-- End Product Content -->
+
+                </div>
+            </div>
+        </section>
+        <!-- End Page Content -->
+
+          <!-- Include SweetAlert CSS and JS -->
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

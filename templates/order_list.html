@@ -1,0 +1,119 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+
+{% block title %}Order List{% endblock %}
+
+
+{% block body %}
+
+<div class="page-body-wrapper">
+ 
+    <!-- Order section Start -->
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Order List</h5>
+        </div>
+
+        <!-- Table Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi">
+                                    <table class="table table-striped all-package">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Order Code</th>
+                                                <th>User Name</th>
+                                                <th>Date</th>
+                                                <th>Payment Method</th>
+                                                <th>Total Quantity</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                                <th>Option</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for order in orders %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>
+                                            <a href="{% url "order_detail" order.order_id %}">
+                                                    {{ order.order_id }}
+                                            </a>
+                                                </td>
+
+                                                <td>{{ order.user_id.user_name }}</td>
+                                                <td>{{ order.order_date}}</td>
+
+                                                <td>{{order.payment_mode}}</td>
+
+                                                {% comment %} <td class="order-success">
+                                                    <span></span>
+                                                </td> {% endcomment %}
+
+                                                <td>{{ order.total_quantity }}</td>
+                                                <td>₹{{ order.total_amount}}</td>
+                                                <td>
+                                                    {% if order.order_status == "Cancelled" %}
+                                                    <span style="background-color: red; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order.order_status }}</span><br>
+                                                {% elif order.order_status == "Delivered" %}
+                                                    <span style="background-color: green; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order.order_status }}</span><br>
+                                                {% elif order.order_status == "Returned" %}
+                                                    <span style="background-color: yellow; color: black; padding:4px; border-radius:5px; font-size:12px">{{ order.order_status }}</span><br>                                         
+                                                {% elif order.order_status == "Pending" %}
+                                                    <span style="background-color: black; color: white; padding:4px; border-radius:5px; font-size:12px">{{ order.order_status }}</span><br>
+                                                {% else %}
+                                                    {{ order.order_status }}<br>
+                                                {% endif %}    
+                                                </td>
+
+
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{% url "order_detail" order.order_id %}">
+                                                                <span class="lnr lnr-eye"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="javascript:void(0)">
+                                                                <span class="lnr lnr-pencil"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="{% url "order_delete" order.order_id %}">
+                                                                <span class="lnr lnr-trash"></span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table End -->
+
+        
+    </div>
+    <!-- Order section End -->
+</div>
+
+
+{% endblock %}

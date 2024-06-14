@@ -1,0 +1,423 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+
+
+
+<div class="page-body">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- chart caard section start -->
+            <div class="col-sm-6 col-xxl-3 col-lg-6 mt-4">
+                <div class="b-b-primary border-5 border-0 card o-hidden">
+                    <div class="custome-1-bg b-r-4 card-body">
+                        <div class="media align-items-center static-top-widget">
+                            <div class="media-body p-0">
+                                <span class="m-0">Total Earnings</span>
+                                <h4 class="mb-0 counter">{{ total_earning }}
+                                    
+                                </h4>
+                            </div>
+                            <div class="align-self-center text-center">
+                                <i data-feather="database"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xxl-3 col-lg-6 mt-4">
+                <div class="b-b-danger border-5 border-0 card o-hidden">
+                    <div class=" custome-2-bg  b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            
+                            
+                            <div class="media-body p-0">
+                                <span class="m-0">Total Booking</span>
+                                
+                                <h4 class="mb-0 counter">{{ total_booking }}
+                                                                        
+                                </h4>
+                            </div>
+                            <div class="align-self-center text-center">
+                                <i data-feather="shopping-bag"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xxl-3 col-lg-6">
+                <div class="b-b-secondary border-5 border-0  card o-hidden">
+                    <div class=" custome-3-bg b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="media-body p-0">
+                                <span class="m-0">Product</span>
+                                <h4 class="mb-0 counter">{{ total_product }}
+                                   
+                                </h4>
+                            </div>
+
+                            <div class="align-self-center text-center">
+                                <i data-feather="box"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-xxl-3 col-lg-6">
+                <div class="b-b-success border-5 border-0 card o-hidden">
+                    <div class=" custome-4-bg b-r-4 card-body">
+                        <div class="media static-top-widget">
+                            <div class="media-body p-0">
+                                <span class="m-0">Total User</span>
+                                <h4 class="mb-0 counter">{{total_user}}
+                                    
+                                </h4>
+                            </div>
+
+                            <div class="align-self-center text-center">
+                                <i data-feather="user-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- chart caard section End -->
+
+            <!-- Earning chart star-->
+            <div class="col-xl-12">
+                <div class="card o-hidden ">
+                    <div class="card-header border-0 pb-1">
+                        <div class="card-header-title">
+                            <h4>Monthly Purchases By Category</h4>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="bar-chart-earning"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-12">
+                <div class="card o-hidden ">
+                    <div class="card-header border-0 pb-1">
+                        <div class="card-header-title">
+                            <h4>Monthly Earning</h4>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="report-chart_"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Earning chart  end-->
+
+           
+
+            <!-- visitors chart start-->
+            <div class="col-xl-12 col-md-6">
+                <div class="h-100">
+                    <div class="card o-hidden card-hover">
+                        <div class="card-header border-0">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="card-header-title">
+                                    <h4>Orders</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="pie-chart">
+                                <div id="pie-chart-orders"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var returnOrders = {{ return_order }};
+        var cancelOrders = {{ cancel_order }};
+        var confirmOrders = {{ delivered_order }};
+
+        console.log(returnOrders, cancelOrders, confirmOrders); 
+
+        var options = {
+            series: [returnOrders, cancelOrders, confirmOrders],
+            labels: ['Return Order', 'Cancel Order', 'Confirm Order'],
+            chart: {
+                width: "100%",
+                height: 275,
+                type: 'donut',
+            },
+            legend: {
+                fontSize: '12px',
+                position: 'bottom',
+                offsetX: 1,
+                offsetY: -1,
+                markers: {
+                    width: 10,
+                    height: 10,
+                },
+                itemMargin: {
+                    vertical: 2
+                },
+            },
+            colors: ['#FFFF00', '#ff0000', '#008000'],
+            plotOptions: {
+                pie: {
+                    startAngle: -90,
+                    endAngle: 270
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            responsive: [
+                {
+                    breakpoint: 1835,
+                    options: {
+                        chart: {
+                            height: 245,
+                        },
+                        legend: {
+                            position: 'bottom',
+                            itemMargin: {
+                                horizontal: 5,
+                                vertical: 1
+                            },
+                        },
+                    },
+                },
+                {
+                    breakpoint: 1388,
+                    options: {
+                        chart: {
+                            height: 330,
+                        },
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+                {
+                    breakpoint: 1275,
+                    options: {
+                        chart: {
+                            height: 300,
+                        },
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+                {
+                    breakpoint: 1158,
+                    options: {
+                        chart: {
+                            height: 280,
+                        },
+                        legend: {
+                            fontSize: '10px',
+                            position: 'bottom',
+                            offsetY: 10,
+                        },
+                    },
+                },
+                {
+                    breakpoint: 598,
+                    options: {
+                        chart: {
+                            height: 280,
+                        },
+                        legend: {
+                            fontSize: '12px',
+                            position: 'bottom',
+                            offsetX: 5,
+                            offsetY: -5,
+                            markers: {
+                                width: 10,
+                                height: 10,
+                            },
+                            itemMargin: {
+                                vertical: 1
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+
+        var chart = new ApexCharts(document.querySelector("#pie-chart-orders"), options);
+        chart.render();
+
+       // var manPurchasesMonthly = JSON.parse('{{ man_purchases_monthly|escapejs }}');
+      //  var womanPurchasesMonthly = JSON.parse('{{ woman_purchases_monthly|escapejs }}');
+      //  var kidsPurchasesMonthly = JSON.parse('{{ kids_purchases_monthly|escapejs }}');
+        var manPurchasesMonthly = [5,10,15,8,6,2,0,0,0,0,0,0]
+        var womanPurchasesMonthly =[8,6,7,5,4,12,0,0,0,0,0,0]
+        var kidsPurchasesMonthly = [7,9,5,7,8,10,0,0,0,0,0,0]
+
+       // console.log(manPurchasesMonthly, womanPurchasesMonthly, kidsPurchasesMonthly); 
+        var product_sell ={
+            series: [{
+                    name: "Man",
+                    data: manPurchasesMonthly
+                },
+        
+                {
+                    name: "Woman",
+                    data: womanPurchasesMonthly
+                },
+                {
+        
+                     name: "Kids",
+                    data: kidsPurchasesMonthly
+                }
+                 
+            ],
+        
+            chart: {
+                toolbar: {
+                    show: false
+                }
+            },
+        
+            chart: {
+                height: 320,
+            },
+        
+            legend: {
+                show: false,
+            },
+        
+            colors: ['#2483e2', '#FFC0CB', '#775DD0'],
+        
+            markers: {
+                size: 1,
+            },
+        
+            // grid: {
+            //     show: false,
+            //     xaxis: {
+            //         lines: {
+            //             show: false
+            //         }
+            //     },
+            // },
+        
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+                labels: {
+                    show: false,
+                }
+        
+            },
+        
+        
+            responsive: [{
+                    breakpoint: 1400,
+                    options: {
+                        chart: {
+                            height: 300,
+                        },
+                    },
+                },
+        
+                {
+                    breakpoint: 992,
+                    options: {
+                        chart: {
+                            height: 210,
+                            width: "100%",
+                            offsetX: 0,
+                        },
+                    },
+                },
+        
+                {
+                    breakpoint: 578,
+                    options: {
+                        chart: {
+                            height: 200,
+                            width: "105%",
+                            offsetX: -20,
+                            offsetY: 10,
+                        },
+                    },
+                },
+        
+                {
+                    breakpoint: 430,
+                    options: {
+                        chart: {
+                            width: "108%",
+                        },
+                    },
+                },
+        
+                {
+                    breakpoint: 330,
+                    options: {
+                        chart: {
+                            width: "112%",
+                        },
+                    },
+                },
+            ],
+        };
+
+        var chart_1 = new ApexCharts(document.querySelector("#bar-chart-earning"), product_sell); 
+        chart_1.render();
+
+        var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'];
+    //    var yValues = JSON.parse('{{ total_earning_Monthly|escapejs }}');
+        var yValues = [15000,10000,8000,20000,12000,3000,0,0,0,0,0,0];
+
+// Combine x and y values into data array
+                    var data = xValues.map((x, index) => ({ x: x, y: yValues[index] }));
+
+                    var total_earning_Monthly = {
+                        series: [{
+                            name: 'Earning',
+                            data: data
+                        }],
+
+                        chart: {
+                            height: 320,
+                            type: 'bar'
+                        },
+
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '40%'
+                            }
+                        },
+
+                        colors: ['#e22454'],
+                        dataLabels: {
+                            enabled: false
+                        },
+
+                        legend: {
+                            show: false,
+                        }
+                    };
+
+                    var total_earning = new ApexCharts(document.querySelector("#report-chart_"), total_earning_Monthly);
+                    total_earning.render();
+    });
+
+</script>
+{% endblock %}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        h1 {
+            color: #34b79d;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .order-details {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .order-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .order-details th,
+        .order-details td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .order-details img {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+        }
+
+        .order-details th {
+            background-color: #f2f2f2;
+        }
+
+        .order-details td:first-child {
+            width: 80px;
+        }
+
+        .timer-section {
+            margin-top: 30px;
+        }
+
+        span.timer {
+            font-weight: bold;
+            color: #f00;
+            font-size: 30px;
+        }
+
+        span.to {
+            font-weight: bold;
+            color: #34b79d;
+        }
+
+        .thank-you-message {
+            font-size: 24px;
+            color: #34b79d;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            li {
+                flex-direction: column;
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 100px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Order Confirmation</h1>
+
+    <p>Your order with ID<span class="to"> {{ order.0.order_id.order_id }}</span> has been confirmed.</p>
+    
+    <p>Redirecting to the home page in <span class="timer" id="countdown">10</span> seconds.</p>
+    <h2>Order Details:</h2>
+    <div class="order-details">
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Color</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order %}
+                <tr>
+                    <td><img src="{{ item.subproduct_id.image }}" alt="{{ item.subproduct_id.product.name }}"></td>
+                    <td>{{ item.subproduct_id.product.name }}</td>
+                    <td>{{ item.color }}</td>
+                    <td>{{ item.size }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>
+                        {% if 'USD' in request.session.currency %}
+                            $ {{ item.price_usd|floatformat:2 }}
+                        {% else %}
+                            ₹ {{ item.price }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <p class="thank-you-message">Thank you for shopping with us!</p>
+
+    <script>
+        let secondsLeft = 10;
+
+        function updateTimer() {
+            document.getElementById('countdown').textContent = secondsLeft;
+            secondsLeft--;
+
+            if (secondsLeft < 0) {
+                // Redirect to the home page when the timer reaches 0
+                window.location.href = "{% url 'home' %}";
+            } else {
+                // Update the timer every second
+                setTimeout(updateTimer, 1000);
+            }
+        }
+        
+        // Initial call to start the timer
+        updateTimer();
+        
+         // Function to show confirmation dialog and download invoice
+         {% comment %} function showConfirmation() {
+            // Show a confirmation dialog
+            if (confirm("Are you sure you want to download the invoice?")) {
+                // If user confirms, redirect to the download URL
+                window.location.href = "/generate_invoice/{{ order_id }}";
+            }
+        }
+
+        // Call the function when the page loads
+        window.onload = function () {
+            showConfirmation();
+        }; {% endcomment %}
+    </script>
+</body>
+
+</html>

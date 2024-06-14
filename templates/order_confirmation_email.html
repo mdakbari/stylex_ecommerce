@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .order-details {
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 50px;
+            max-height: 50px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .total {
+            margin-top: 20px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .thank-you {
+            margin-top: 20px;
+            text-align: center;
+            color: #008000;
+            font-size: 18px;
+        }
+
+        .shipping-info {
+            margin-top: 20px;
+        }
+
+        .shipping-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .contact {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .contact a {
+            color: #008000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation #{{order_id}}</h1>
+
+        <p>Dear {{user.name}},</p>
+
+        <p>Your order has been confirmed. Thank you for shopping with us!</p>
+
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p>Order Date: {{ order_date }}</p>
+
+            <table border="1" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.subproduct_id.product.name }}</td>
+                            <td>{{ item.size }}</td>
+                            <td>{{ item.color }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ item.price }}</td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total">
+            <p>Total Amount: ₹{{ total_amount }}</p>
+        </div>
+
+        <div class="shipping-info">
+            <h2>Shipping Information</h2>
+            <h3>Shipping Address: </h3>
+            <p>{{ items.0.order_id.address_id.street_address }}, {{ items.0.order_id.address_id.city }}, {{ items.0.order_id.address_id.state }}, {{ items.0.order_id.address_id.country }} - {{ items.0.order_id.address_id.pincode }}</p>
+            <p>Phone: {{ items.0.order_id.address_id.phone_number }}</p>
+            <p>Email: {{ items.0.order_id.address_id.email }}</p>
+        </div>
+
+        <p class="thank-you">Thank you for choosing us! We appreciate your business.</p>
+
+        <div class="contact">
+            <p>If you have any queries or need assistance, feel free to <a href="{% url "contact" %}">contact us</a>:</p>
+            <p>Email:{{ items.0.order_id.address_id.email }} </p>
+            <p>Phone: +91 {{ items.0.order_id.address_id.phone_number }}</p>
+        </div>
+    </div>
+</body>
+</html>

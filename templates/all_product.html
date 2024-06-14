@@ -1,0 +1,143 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+
+{% block body %}
+<div class="page-body-wrapper">
+
+
+
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Products List</h5>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi table-product">
+                                    <table class="table table-1d all-package">
+                                        <thead>
+                                            <tr>
+                                                <th>Product id</th>
+                                                <th>Product Image</th>
+                                                <th>Product Name</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Edit quantity</th>
+                                                <th>Option</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for product in products %}
+                                            <tr>
+
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>
+                                                    <img src="{{ product.image }}" class="img-fluid"
+                                                        alt="img">
+                                                </td>
+
+                                                <td>
+                                                    <a href="javascript:void(0)">{{ product.product.name}}</a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0)">{{ product.product.category}}</a>
+                                                </td>
+
+                                                
+                                                <td class="td-price">₹ {{ product.product.price}}</td>
+
+                                                <td class="td-price">
+                                                   {{ product.get_stock_quantity }}
+                                                </td>
+
+
+                                                <td>
+                                                    <ul>
+                                                    <li>
+                                                        <a href="{% url "edit_quantity" product.id %}">
+                                                            <span class="lnr lnr-pencil"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                </td>
+                                               
+
+
+
+
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="order-detail.html">
+                                                                <span class="lnr lnr-eye"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="{% url "edit_product" product.id %}">
+                                                                <span class="lnr lnr-pencil"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="{% url "remove" product.id %}">
+                                                                <i class="far fa-trash-alt theme-color"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} <div class="pagination-box">
+                            <nav class="ms-auto me-auto " aria-label="...">
+                                <ul class="pagination pagination-primary">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="javascript:void(0)"
+                                            tabindex="-1">Previous</a>
+                                    </li>
+
+                                    <li class="page-item active">
+                                        <a class="page-link" href="javascript:void(0)">1</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">2 <span
+                                                class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">3</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container-fluid Ends-->
+
+    </div>
+</div>
+
+
+
+{% endblock %}

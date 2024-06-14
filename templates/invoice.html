@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/invo-html/HTML/main/invoice-5.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 17:15:41 GMT -->
+<head>
+    <title>Invoice #{{order.0.order_id.order_id}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+
+    <!-- External CSS libraries -->
+    <link type="text/css" rel="stylesheet" href="/static/invoice/assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/invoice/assets/fonts/font-awesome/css/font-awesome.min.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="/static/invoice/assets/img/favicon.ico" type="image/x-icon" >
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link type="text/css" rel="stylesheet" href="/static/invoice/assets/css/style.css">
+
+
+</head>
+<body>
+
+<!-- Invoice 5 start -->
+<div class="invoice-5 invoice-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="invoice-inner-1">
+                    <div class="invoice-info" id="invoice_wrapper">
+                        <div id="invoice_content">
+                            <div class="invoice-inner">
+                                <div class="invoice-header">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <h4 class="name">Invoice</h4>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h4 class="order text-end">Order # {{order.0.order_id.order_id}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row invoice-header-inner">
+                                        <div class="col-sm-3 col-pad border-r address-info">
+                                            <p class="strong">Billed To:</p>
+                                            <p>{{order.0.order_id.user_id.name}}</p>
+                                            <p>Email: {{ order.0.order_id.address_id.email}}</p>
+                                            <p>Phone: {{ order.0.order_id.address_id.phone_number }}</p>
+                                        </div>
+                                        <div class="col-sm-3 col-pad border-r br3 address-info">
+                                            <p class="strong">Shipped To:</p>
+                                            <p>{{order.0.order_id.user_id.user_name}}</p>
+                                            <p>{{order.0.order_id.address_id.street_address }}, {{ order.0.order_id.address_id.city }}, {{ order.0.order_id.address_id.state }}, {{ order.0.order_id.address_id.country }} - {{ order.0.order_id.address_id.pincode }}</p>
+                                            
+                                        </div>
+                                        <div class="col-sm-3 col-pad border-r br2 address-info">
+                                            <p class="strong">Payment Method:</p>
+                                            <p>{{order.0.order_id.payment_mode}}</p>
+                                        </div>
+                                        <div class="col-sm-3 col-pad address-info">
+                                            <p class="strong">Order Date:</p>
+                                            <p>{{order.0.order_id.order_date}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-section border-bottom">
+                                    <div class="table-responsive mb-30">
+                                        <table class="table table-condensed invoice-table">
+                                            <thead class="bg-active">
+                                            <tr>
+                                                <th>Item Item</th>
+                                                <th class="text-center">Price</th>
+                                                <th class="text-center">Quantity</th>
+                                                <th class="text-right">Totals</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                             {% for item in order %}   
+                                            <tr>
+                                                <td>
+                                                    <div class="item-desc-1">
+                                                        <span>{{ item.subproduct_id.product.name }}</span>
+                                                        <small>{{item.size}} | {{item.color}} </small>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">{{item.subproduct_id.product.price }}</td>
+                                                <td class="text-center">{{item.quantity }}</td>
+                                                <td class="text-right">{{item.price}}</td>
+                                            </tr>
+                                            {% endfor %}        
+                                            <tr>
+                                                <td colspan="3" class="text-end">SubTotal</td>
+                                                <td class="text-right">{{subtotal}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-end">Shipping Charg</td>
+                                                <td class="text-right">{{shipping_charge}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="text-end fw-bold">Grand Total</td>
+                                                <td class="text-right fw-bold">{{total}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="table-section">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="text-start mb-30">
+                                                <h3 class="inv-title-1">Important Note</h3>
+                                                <ul class="mb-0 important-notes-list-1">
+                                                    <li>Once order done, money can't refund</li>
+                                                    <li>Delivery might delay due to some external dependency</li>
+                                                    <li>This is computer generated invoice and physical signature does not require.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-offsite">
+                                            <div class="payment-info mb-30 text-end">
+                                                <h3 class="inv-title-1">Payment Info</h3>
+                                                <p class="mb-0">This payment made by BRAC BANK master card without any problem</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invoice-btn-section clearfix d-print-none">
+                        <a href="javascript:window.print()" class="btn btn-lg btn-print">
+                            <i class="fa fa-print"></i> Print Invoice
+                        </a>
+                        <a id="invoice_download_btn" class="btn btn-lg btn-download">
+                            <i class="fa fa-download"></i> Download Invoice
+                        </a>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Invoice 5 end -->
+
+<script src="/static/invoice/assets/js/jquery.min.js"></script>
+<script src="/static/invoice/assets/js/jspdf.min.js"></script>
+<script src="/static/invoice/assets/js/html2canvas.js"></script>
+<script src="/static/invoice/assets/js/app.js"></script>
+</body>
+
+<!-- Mirrored from storage.googleapis.com/theme-vessel-items/checking-sites/invo-html/HTML/main/invoice-5.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 21 Mar 2024 17:15:41 GMT -->
+</html>

@@ -1,0 +1,294 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+{% block title %}Add Product{% endblock %}
+
+{% block body %}
+<div class="page-body-wrapper">
+    
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Add New Product</h5>
+        </div>
+
+        <!-- New Product Add Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            
+                            <div class="card">
+                                <div class="card-body"> 
+                                    <div class="card-header-2">
+                                        <h5>Product Information</h5>
+                                    </div>
+                                {% comment %} {% if model_name == 'product' %} {% endcomment %}
+                                    <form class="theme-form theme-form-2 mega-form" method="post" action="{% url 'add_product'%}" enctype="multipart/form-data">
+                                        <div class="row">
+                                            {% csrf_token %}
+                                            <div id="error-container">
+                                                {% if messages %}
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    {% for message in messages %}
+                                                    
+                                                    {{ message }}
+                                                    {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="mb-4 row align-items-center">
+                                                <label
+                                                    class="col-sm-2 col-form-label form-label-title">Category</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="category" required>
+                                                        {% for category in categories %}
+                                                        <option value="{{ category.pk }}">{{ category.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-2 mb-0">Product
+                                                    Name</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="product_name"
+                                                        placeholder="Product Name" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-2 mb-0">Product
+                                                    Price</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="product_price"
+                                                        placeholder="Product Name" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                            
+                                                <div class="col-sm-10">
+                                                    <button type="submit" name="product_form" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        
+                
+
+                                           
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body"> 
+                                    <div class="card-header-2">
+                                        <h5>Add Size, Color & Stock</h5>
+                                    </div>
+                                {% comment %} {% if model_name == 'product' %} {% endcomment %}
+                                    <form class="theme-form theme-form-2 mega-form" method="post" action="{% url 'add_product'%}" enctype="multipart/form-data">
+                                        <div class="row">
+                                            {% csrf_token %}
+                                            <div id="error-container">
+                                                {% if messages %}
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    {% for message in messages %}
+                                                    
+                                                    {{ message }}
+                                                    {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="mb-4 row align-items-center">
+                                                <label
+                                                    class="col-sm-2 col-form-label form-label-title">Product</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="product" required>
+                                                        <option value="">Selcet Product</option>
+
+                                                        {% for product in products %}
+                                                        <option value="{{ product.pk }}">{{ product.name  }} | {{product.category}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-2 mb-0">Size
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-multiple w-100" name="sizes"  required>
+                                                        <option value="">Selcet Size</option>
+                                                        
+                                                        {% for size_ in sizes %}
+                                                        <option value="{{ size_.pk }}">{{ size_.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-2 mb-0">Color
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-multiple w-100" name="colors" required>
+                                                        <option value="">Selcet Color
+
+                                                        </option>
+
+                                                        {% for color in colors %}
+                                                        <option value="{{ color.pk }}">{{ color.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="form-label-title col-sm-2 mb-0">Stock
+                                                    </label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="stock"
+                                                        placeholder="Product Name" required>
+                                                </div>
+                                                {% if messages.size_exists %}
+                                                <span class="error"> * {{ messages.size_exists }}</span>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                            
+                                                <div class="col-sm-10">
+                                                    <button type="submit" name="size_form" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        
+                
+
+                                           
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Add SubProduct</h5>
+                                    </div>
+
+                                {% comment %} {% elif model_name == 'sub_product' %} {% endcomment %}
+                                    <form class="theme-form theme-form-2 mega-form"  method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div id="error-container">
+                                                {% if messages %}
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    {% for message in messages %}
+                                                        
+                                                    {{ message }}
+                                                    {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Product</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="product" onchange="getsubcat(this.value)" required>
+                                                        <option value="">Selcet Product</option>
+                                                        {% for product in products %}
+                                                        <option value="{{ product.pk }}">{{ product.name }} | {{product.category}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                             <div class="mb-4 row align-items-center">
+                                                
+                                                    <label class="col-sm-2 col-form-label form-label-title">Product
+                                                        Description</label>
+                                                    <div class="col-sm-10">
+                                                            <input class="form-control" type="text" name="description"
+                                                                placeholder="Product Name" required>
+                                                        </div>
+                                                    </div>
+                                               
+                                            </div>
+
+                                            <div class="mb-4 row align-items-center">
+                                                <label
+                                                    class="col-sm-2 col-form-label form-label-title">Images</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control form-choose" type="file" name="images"
+                                                        id="formFileMultiple" multiple required>
+                                                </div>
+                                            </div>
+                                             <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Product</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="productsize"  id="select_size" multiple required>
+
+                                                        <option value="">Selcet Size</option>
+
+                                                      
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                <div class="mb-4 row align-items-center">
+                                            
+                                                    <div class="col-sm-10">
+                                                        <button type="submit" name="sub_product_form" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                           
+                                        </div>
+                                                                    
+                                    </form>
+                                {% comment %} {% endif %} {% endcomment %}
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- New Product Add End -->
+
+        
+      
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+
+    function getsubcat(id) {
+        $.ajax({
+          url: '/get_product_sizencolor/',
+          method: 'POST',
+          data: { 'id': id },
+          success: function (data) {
+            var t = data.list;
+            $('#select_size').html('');
+    
+            for (var i = 0; i < t.length; i++) {
+              var x = ['<option value="', t[i].id, '">', t[i].product_name, '</option>'].join('');
+              $('#select_size').append(x);
+            }
+          }
+        });
+      }
+</script>
+    <!-- Container-fluid End -->
+</div>
+
+
+
+{% endblock %}

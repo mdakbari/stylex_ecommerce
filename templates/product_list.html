@@ -1,0 +1,103 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+
+{% block title %}Product List{% endblock %}
+
+
+{% block body %}
+
+    
+
+<div class="page-body-wrapper">
+ 
+    <!-- Order section Start -->
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Product List</h5>
+        </div>
+
+        <!-- Table Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi">
+                                    <table class="table table-striped all-package">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Price</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for product in products %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                               
+
+                                                <td>{{ product.name }}</td>
+                                                <td>{{ product.category}}</td>
+
+                                                <td>{{product.price}}</td>
+
+                                                {% comment %} <td class="order-success">
+                                                    <span></span>
+                                                </td> {% endcomment %}
+
+                                                <td>{{ product.created_at }}</td>
+                                            
+                                                </td>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="">
+                                                                <span class="lnr lnr-eye"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="">
+                                                                <span class="lnr lnr-pencil"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="{% url "remove_products" product.id %}">
+                                                                <i class="far fa-trash-alt theme-color"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <!-- Pagination Box End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table End -->
+
+       
+    </div>
+    <!-- Order section End -->
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base_site.html" %}
+{% load i18n static %}
+
+{% block extrahead %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="shortcut icon" href="{% static 'assets/img/logo-mini-projectshowcase.png' %}">
+<link rel="icon" href="{% static 'assets/img/logo-mini-projectshowcase.png' %}" type="image/x-icon">
+
+<meta name="author" content="Prathmesh Soni"/>
+<meta name="description" content="Display project overviews, detailed descriptions, secure password storage, and screenshots in a user-friendly website."/>
+<meta property="og:title" content="Prathmesh Soni"/>
+<meta property="og:site_name" content="Prathmesh Soni Project Showcase Website"/>
+<meta property="og:url" content="projectshowcase.prathmeshsoni.works"/>
+<meta property="og:description" content="Display project overviews, detailed descriptions, secure password storage, and screenshots in a user-friendly website.">
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="{% static 'assets/img/pretty-snap-25-09-2023.png' %}"/>  
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+    svg > *{
+        /* fill: white; */
+        color:#34b79d;
+    }
+</style>
+<link rel="stylesheet" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+    {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct
+    the errors below.{% endblocktranslate %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+
+    {% if user.is_authenticated %}
+    <p class="errornote">
+        {% blocktranslate trimmed %}
+        You are authenticated as {{ username }}, but are not authorized to
+        access this page. Would you like to login to a different account?
+        {% endblocktranslate %}
+    </p>
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+        <div class="form-row">
+            {{ form.username.errors }}
+            {{ form.username.label_tag }} {{ form.username }}
+        </div>
+        <div class="form-row">
+            {{ form.password.errors }}
+            {{ form.password.label_tag }} {{ form.password }}
+            <input type="hidden" name="next" value="{{ next }}">
+        </div>
+  
+        <div class="submit-row">
+            <input type="submit" id="login" value="{% translate 'Log in' %}" style="width: 100%;">
+        </div>
+        <div class="submit-row">
+            <a href="/" style="float: right; color: #34b79d;">
+                {% translate 'Back To Home?' %}
+            </a>
+        </div>
+    </form>
+
+</div>
+{% endblock %}
+
+{% block blockbots %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("id_username").placeholder = "Enter Your Username";
+        document.getElementById("id_password").placeholder = "Enter Your Password";
+        document.getElementById("header").style.background = "#34b79d";
+        document.getElementById("login").style.background = "#34b79d";
+        
+    });
+
+</script>
+{% endblock %}

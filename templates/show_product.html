@@ -1,0 +1,246 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %} StyleX - {{product.product.name}}{% endblock %}
+{% block body %}
+    
+
+<div class="wraper">
+
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="breadcrumb-link">
+                            <a href="#">Home</a>
+                            <a href="#">Categories</a>
+                            <span>Men Polos & Tees</span>
+                        </nav>
+                      </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section id="product-ID_XXXX" class="content-page single-product-content">
+
+            <!-- Product -->
+            <div id="product-detail" class="container">
+                <div class="row">
+                    <!-- Product Image -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-30">
+                        <div class="product-page-image">
+                            <!-- Slick Image Slider -->
+                            <div class="product-image-slider product-image-gallery" id="product-image-gallery" data-pswp-uid="3">
+                                <div class="item">
+                                    <a class="product-gallery-item" href="" data-size="" data-med="" data-med-size="">
+                                        <img src="{{ product.image }}" alt="image 1" />
+                                    </a>
+                                </div>
+
+                            </div>
+                            <!-- End Slick Image Slider -->
+
+                            <a href="javascript:void(0)" id="zoom-images-button" class="zoom-images-button"><i class="fa fa-expand" aria-hidden="true"></i></a>
+
+
+                        </div>
+
+                    </div>
+                    <!-- End Product Image -->
+
+                    <!-- Product Content -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-30">
+                        <div class="product-page-content">
+                            <h2 class="product-title">{{ product.product.name}}</h2>
+                            <div class="product-rating">
+                                <div class="star-rating" itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating" title="Rated 4 out of 5">
+                                    <span style="width: 60%"></span>
+                                </div>
+                                <a href="#" class="product-rating-count"><span class="count">3</span> Reviews</a>
+                            </div>
+                            <div class="product-price">
+                                <span><span class="product-price-sign"></span><span class="product-price-text">
+                                    {% if 'USD' in request.session.currency %}
+                                        $ {{ product.product.price_usd|floatformat:2 }}
+                                    {% else %}
+                                        ₹ {{ product.product.price_usd|floatformat:2 }}
+                                    {% endif %}</span></span>
+                                                        </div>
+                            <p class="product-description">
+                                {{ product.description }}
+                            </p>
+                            <div class="row product-filters">
+                                <form class="col-md-6 filters-color">
+                                    <div class="product-meta">
+                                        <span>Size :
+                                            <select name="select-size" id="select-size" class="nice-select-box" onchange="updateSelectedSize(0)" required>
+                                                <option value="" selected="selected">Select Size</option>
+                                                {% for size in sizes %}
+                                                    <option value="{{ size.name }}">{{ size.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </span>
+                                        <span>Color : 
+                                            
+                                                <select name="select-color" id="select-color" class="nice-select-box" onchange="updateSelectedSize(1)" required>
+                                                    
+                                                    <option value="" selected="selected">Select Color</option>
+                                                    {% comment %} {% for product_size_color in colors %}
+                                                        
+                                                        <option value="{{ product_size_color.name }}">
+                                                            {{ product_size_color.name }}</option>
+                                                            {% endfor %} {% endcomment %}
+                                                                {% comment %} <div class="filter-color-switcher">
+                                                            <span style="background-color: #{{ product_size_color.name }}"></span>
+                                                        </div> {% endcomment %}
+                                                </select>
+                                        
+                                        </span>
+                                        <span>Category : <span class="category" itemprop="category">{{product.product.category.name}}</span></span>
+                                       
+                                    </div>
+                                </form>
+                            </div>
+                            <form id="form" class="single-variation-wrap" action="{% url "addcart" product.id%}" method="post"  onsubmit="return validateSizeAndStock()">
+                                {% csrf_token %}
+                                <div class="product-quantity">
+                                    <span data-value="+" class="quantity-btn quantityPlus"></span>
+                                    <input class="quantity input-lg" step="1"  name="quantity" value="1" title="Quantity" type="number" />
+                                    <span data-value="-" class="quantity-btn quantityMinus"></span>
+                                </div>
+                                <input type="hidden" name="selected_color" id="selected_color" value="">
+                                <input type="hidden" name="selected_size" id="selected_size" value="">
+                                <input type="hidden" name="stock_quantity" id="stock_quantity" value="">
+                                <input type="hidden" name="product_id" value="{{ product.product.id }}">
+                                <button type="submit" name="addcart" id="addcart" class="btn btn-lg btn-black"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Add to cart</button>
+                                <button type="submit" class="btn btn-lg btn-color "><i class="fa fa-shopping-bag" aria-hidden="true"></i>Buy now</button>
+                            </form>
+                            
+                            <div class="single-add-to-wrap ">
+                                <a class="single-add-to-wishlist"><i class="fa fa-heart left" aria-hidden="true"></i><span>Add to Wishlist</span></a>
+                            </div>
+                            {% comment %} <div class="product-meta">
+                                <span>SKU : <span class="sku" itemprop="sku">005687</span></span>
+                                <span>Category : <span class="category" itemprop="category">Shoes</span></span>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Product -->
+
+        </section>
+        <!-- End Page Content -->
+        <script>
+            function updateSelectedSize(a) {
+                
+                var selectedSize = $("#select-size").val();
+                $("#selected_size").val(selectedSize);
+                var product_id = {{ product.product_id }};
+                var selectedColor = $("#select-color").val();
+                $("#selected_color").val(selectedColor);
+            
+                if(a==0){
+                
+                    $.ajax({
+
+                        url: '/get_available_colors/',
+                        method: 'POST',
+                        data: { 'product_id': product_id, 'selected_size': selectedSize },
+                        success: function (data) {
+                            var t = data.list;
+                            $('#select-color').html('');
+                            $('.list:eq(1)').html('');
+                            for (var i = 0; i < t.length; i++) {
+
+                                var y =['<li data-value="', t[i].name, '" class="option">', t[i].name, '</li>'].join('');
+                                //<li data-value="M" class="option">M</li>
+                                var x = ['<option value="', t[i].name, '">', t[i].name, '</option>'].join('');
+                                $('#select-color').append(x);
+                                $('.list:eq(1)').append(y);
+                            }
+                            
+                        }
+                    });
+            }     
+                
+         }
+            
+            function showSuccessMessage() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Item added to cart',
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            }
+            
+            
+                function validateSizeAndStock() {
+                    var selectedSize = $("#select-size").val();
+                    var selectedColor = $("#select-color").val();
+                    var product_id = {{ product.product.id }};
+                    if (selectedSize == "" || selectedColor == "") {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Please select size and color',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                        return false;
+                    }
+                    else
+                    {
+
+                    
+
+                    $.ajax({
+                        url:'/check_stock_quantity/',
+                        method: 'POST',
+                        data: { 'product_id': product_id, 'selected_size': selectedSize, 'selected_color': selectedColor },
+                        success: function (data) {
+                            var stock_quantity = data.stock_quantity;
+                            var quantity = $(".quantity").val();
+                            if (stock_quantity < quantity) {
+                                alert("Stock not available");
+                            } else {
+                                showSuccessMessage();
+                                return true;
+                            }
+                        }
+                    })
+                }
+                    
+                    
+                }
+                
+
+            function getsubcat(id) {
+                $.ajax({
+                  url: '/get_color/',
+                  method: 'POST',
+                  data: { 'id': id },
+                  success: function (data) {
+                    var t = data.list;
+                    $('#select_size').html('');
+            
+                    for (var i = 0; i < t.length; i++) {
+                      var x = ['<option value="', t[i].id, '">', t[i].product_name, '</option>'].join('');
+                      $('#select_size').append(x);
+                      $('#select_size').append(y);
+                    }
+                  }
+                });
+              }
+
+        </script>
+        <!-- Include SweetAlert CSS and JS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    </div>
+</div>
+{% endblock %}

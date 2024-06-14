@@ -1,0 +1,78 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+
+{% block title %}Contact {% endblock %}
+
+
+{% block body %}
+
+<div class="page-body-wrapper">
+ 
+    <!-- Order section Start -->
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Order List</h5>
+        </div>
+
+        <!-- Table Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi">
+                                    <table class="table table-striped all-package">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Subject</th>
+                                                <th>Comments</th>
+                                                <th>Date</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            {% for contact in contacts %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                               
+
+                                                <td>{{ contact.name }}</td>
+                                                <td>{{ contact.email}}</td>
+
+                                                <td>{{ contact.subject}}</td>
+
+                                                {% comment %} <td class="order-success">
+                                                    <span></span>
+                                                </td> {% endcomment %}
+
+                                                <td>{{ contact.Comments }}</td>
+                                                <td>{{ contact.created_at }}</td>
+                                            
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Table End -->
+
+       
+    </div>
+    <!-- Order section End -->
+</div>
+
+
+{% endblock %}

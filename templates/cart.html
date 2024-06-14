@@ -1,0 +1,339 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} StyleX - Cart{% endblock %}
+ 
+{% block body %}
+ 
+
+<style>
+
+    .cart{
+        width: 500px !important;
+        height: 370px !important;
+    }
+</style>
+
+<div class="wraper">
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="breadcrumb-link">
+                            <a href="{% url "home" %}">Home</a>
+                            <span>Cart</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section class="content-page">
+            <div class="container mb-80">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <article class="post-8">
+                            
+                            {% if number_of_items > 0%}
+                            
+                            <div class="cart-product-table-wrap responsive-table">
+                                
+                            <form class="cart-form" id="checkoutForm" action="{% url 'updatecart' %}" method="post">
+                                {% csrf_token %}
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product-remove"></th>
+                                                <th class="product-thumbnail"></th>
+                                                <th class="product-name">Product</th>
+                                                <th class="product-price">Price</th>
+                                                <th class="product-quantity">Quantity</th>
+                                                <th class="product-quantity">Size</th>
+                                                <th class="product-quantity">Color</th>
+                                                <th class="product-subtotal">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in users %}
+        
+                                            <tr class="cart-item" data-item-id="{{ item.pk }}">
+                                                <td class="product-remove">
+                                                    <a href="{% url "removecart" id=item.pk  %}"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td class="product-thumbnail">
+                                                    <a href="{% url "show_product" item.subproduct.id %}">
+                                                        <img src="{{ item.subproduct.image}}" alt="" /></a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a href="{% url "show_product" item.subproduct.id %}">{{ item.subproduct.product.name }} - {{ item.size }} | {{ item.color }}</a>
+                                                </td>
+                                                <td class="product-price">
+                                                    <span class="product-price-amount amount">
+                                                        {% if 'USD' in request.session.currency %}
+                                                                $ {{ item.subproduct.product.price_usd|floatformat:2 }}
+                                                        {% else %}
+                                                                ₹ {{ item.subproduct.product.price_usd }}
+                                                        {% endif %}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="product-quantity">
+                                                        <span data-value="+" class="quantity-btn quantityPlus"></span>
+                                                        <input class="quantity input-lg" id="quantity_{{ item.pk }}" step="1"  name="quantity_{{ item.pk }}" value="{{ item.quantity }}" title="Quantity" type="number" />
+                                                        <span data-value="-" class="quantity-btn quantityMinus"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="product-quantity">
+                                                        <select name="select-size_{{ item.pk }}" id="select-size_{{ item.pk }}" class="nice-select-box" onchange="getcolor_bysize(this)">
+                                                            <option value="{{item.size}}" selected="selected">{{item.size}}</option>
+                                                            {% for size in item.sizes %}
+                                                                <option value="{{ size }}">{{ size }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="product-quantity" id="color_{{ item.pk }}">
+                                                        <select name="select-color_{{ item.pk }}" id="select-color_{{ item.pk }}" class="nice-select-box">
+                                                            <option value="{{item.color}}" selected="selected">{{item.color}}</option>                                                            
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                
+                                                <td class="product-subtotal">
+                                                    <span class="product-price-sub_total amount">
+                                                        {% if 'USD' in request.session.currency %}
+                                                                $ {{ item.total_price_usd|floatformat:2 }}
+                                                        {% else %}
+                                                                ₹ {{ item.total_price|floatformat:2 }}
+                                                        {% endif %}
+                                                    </span>
+                                                </td>
+                                                <input type="hidden" name="product_id_{{ item.pk }}" id="product_id_{{ item.pk }}" value="{{ item.subproduct.product.id }}">
+                                            </tr>
+                                            
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row cart-actions">
+                                    <div class="col-md-6">
+                                        {% comment %} <div class="coupon">
+                                            <input class="input-md" id="coupon_code" name="coupon_code" title="Coupon Code" value="" placeholder="Enter Coupon Code" type="text">
+                                            <input class="btn btn-md btn-black" name="coupon_code" value="Apply Coupon" type="submit" />
+                                        </div> {% endcomment %}
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button class="btn btn-md btn-gray btn-update-cart" type="submit">Update cart</button>
+                                    </div>
+                            </form>
+                        </div>
+                        <div class="cart-collateral">
+                            <div class="cart_totals">
+                                <h3>Cart totals</h3>
+                                <div class="responsive-table">
+                                    <table>
+                                        <tbody>
+                                            <tr class="cart-subtotal">
+                                                <th>Subtotal</th>
+                                                <td><span class="product-price-amount amount">
+                                                    {% if 'USD' in request.session.currency %}
+                                                        ${{ total_cart_price_usd|floatformat:2 }}
+                                                    {% else %}
+                                                        ₹{{ total_cart_price|floatformat:2 }}
+                                                    {% endif %} 
+                                                </span></td>
+                                            </tr>
+                                            <tr class="shipping">
+                                                <th>Shipping</th>
+                                                <td>
+                                                    <ul id="shipping_method">
+                                                        <li>
+                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_flat_rate" value="legacy_flat_rate" class="shipping_method" checked="checked" type="radio">
+                                                            <label for="shipping_method_0_legacy_flat_rate">Flat Rate: <span class="woocommerce-Price-amount amount">
+                                                                {% if 'USD' in request.session.currency %}
+                                                                    ${{ shipping_price_usd|floatformat:2 }}
+                                                                {% else %}
+                                                                    ₹{{ shipping_price|floatformat:2 }}
+                                                                {% endif %}</span></label>
+                                                        </li>
+                                                        <li>
+                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_free_shipping" value="legacy_free_shipping" class="shipping_method" type="radio">
+                                                            <label for="shipping_method_0_legacy_free_shipping">Free Shipping</label>
+                                                        </li>
+                                                        <li>
+                                                            <input name="shipping_method[0]" data-index="0" id="shipping_method_0_legacy_local_delivery" value="legacy_local_delivery" class="shipping_method" type="radio">
+                                                            <label for="shipping_method_0_legacy_local_delivery">Local Delivery</label>
+                                                        </li>
+                                                    </ul>
+                                                    <form>
+                                                        <p>
+                                                            <a href="#">Calculate shipping</a>
+                                                        </p>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>Total</th>
+                                                <td><span class="product-price-amount amount">
+                                                    {% if 'USD' in request.session.currency %}
+                                                        ${{ after_shipping_price_usd|floatformat:2 }}
+                                                    {% else %}
+                                                        ₹{{ after_shipping_price|floatformat:2 }}
+                                                    {% endif %}
+                                                 </span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="product-proceed-to-checkout">
+                                    <button class="btn btn-lg btn-color form-full-width" onclick="checkSizeAndProceed()">Proceed to checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                        <script>
+                            function getcolor_bysize(selectElement) {
+                                var itemId = $(selectElement).closest('.cart-item').data('item-id');
+                                var size = $(selectElement).val();
+                                var color = $(`#select-color_${itemId}`).val();
+                                var product_id = $(`#product_id_${itemId}`).val()
+                                
+                                $.ajax({
+                                    url: '/get_colors/',
+                                    type: 'GET',
+                                    data: {
+                                        'size': size,
+                                        'product_id': product_id
+                                    },
+                                    success: function (data){
+                                        var colors = data.colors;
+                                        $(`#select-color_${itemId}`).empty();
+                                        $(`#color_${itemId} .list`).empty();
+                                        
+                                        
+                                        var select = $(`#select-color_${itemId}`);
+                                        var colr_ = $(`#color_${itemId} .list`);
+                                        select.empty();
+                                        for (var i = 0; i < colors.length; i++) {
+                                            var option = $('<option></option>').attr('value', colors[i]).text(colors[i]);
+                                            colr_.append(`<li data-value="${colors[i]}" class="option">${
+                                                colors[i]
+                                            }</li>`);
+                                            select.append(option);
+                                            
+                                        }
+                                    }
+                                });
+                            }
+
+                            $(document).ready(function() {
+                                // Click event listener for the "Update cart" button
+                                $('.btn-update-cart').click(function(event) {
+                                    // Prevent the default button behavior
+                                    event.preventDefault();
+                                    
+                                    // Iterate over each item in the cart
+                                    var allValid = true;
+                                    $('.cart-item').each(function() {
+                                        var itemId = $(this).data('item-id');
+                                        var selectedSize = $(`#select-size_${itemId}`).val();
+                                        var selectedColor = $(`#select-color_${itemId}`).val();
+                                        var product_id = $(`#product_id_${itemId}`).val();
+                                        var quantity = $("#quantity_" + itemId).val(); // Get the quantity for the current item
+                                        
+                                        // Make an AJAX request to check stock quantity for the selected size and color
+                                        $.ajax({
+                                            url:'/check_stock_quantity/',
+                                            method: 'POST',
+                                            data: { 'product_id': product_id, 'selected_size': selectedSize, 'selected_color': selectedColor },
+                                            async: false, // Synchronous request to ensure validation completes before form submission
+                                            success: function (data) {
+                                                var stock_quantity = data.stock_quantity;
+                                                    
+                                                if (stock_quantity < quantity) {
+                                                    allValid = false;
+                                                    Swal.fire({
+                                                        icon: 'warning',
+                                                        title: 'Oops...',
+                                                        text: 'Sorry, the selected color (' + selectedColor + ' ) and size (' + selectedSize + ') combination is out of stock. ',
+                                                    });
+                                                    //alert("Sorry, the selected size (" + selectedSize + ") and color (" + selectedColor + ") combination is not available in stock. Please choose a different size or color.");
+                                                    return false;
+                                                }
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error('Error:', error);
+                                                allValid = false;
+                                                return false; // Break out of loop on error
+                                            }
+                                        });
+                                        
+                                        // Exit loop if any item is invalid
+                                        if (!allValid) {
+                                            return false;
+                                        }
+                                    });
+                                    
+                                    // If all items are valid, submit the form
+                                    if (allValid) {
+                                        $('#checkoutForm').submit();
+                                    }
+                                });
+                            });
+                            
+                            
+
+
+                            function checkSizeAndProceed() {
+                                var selectElements = document.querySelectorAll('.nice-select-box');
+                                var sizeSelected = true;
+                                
+                                selectElements.forEach(function (select) {
+                                    if (select.value === 'None') {
+                                        sizeSelected = false;
+                                    }
+                                });
+                                
+                                if (!sizeSelected) {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Oops...',
+                                        text: 'Please select a size before adding to the cart or buying.',
+                                    });
+                                } else {
+                                    window.location.href = "/checkout";
+                                }
+                            }
+                        </script>
+
+                        {% else %}
+                        <div class="responsive-table">
+                            <div class="product-proceed-to-checkout text-center">
+                               <a href="{% url 'home' %}">
+                                <img src="{% static 'img/Add to Cart.gif' %}" width="500" height="50" alt="Empty Cart" class="img-fluid cart">
+                                </a>
+                            </div>    
+                        </div>
+                        {% endif %}
+
+                    </article>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- End Page Content -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</div>
+</div>
+{% endblock %}

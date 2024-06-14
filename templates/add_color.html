@@ -1,0 +1,70 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+{% block title %}Add Color{% endblock %}
+
+{% block body %}
+<div class="page-body-wrapper">
+
+
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Add Color</h5>
+        </div>
+
+        <!-- New Product Add Start -->
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-desi table-product">
+                                    <form class="theme-form theme-form-2 mega-form" method="post" action="{% url 'add_color' %}" enctype="multipart/form-data">
+                                        <div class="row">
+                                            {% csrf_token %}
+                                            {% if messages. %}
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                {% for message in messages %}
+                                                {{ message }}
+                                                {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                            </div>
+                                            <div class="mb-4 row align-items-center">
+                                                <label
+                                                    class="col-sm-2 col-form-label form-label-title">Add color</label>
+                                                <div class="col-sm-10">
+                                                  <input type="text" class="form-control" name="color_name" placeholder="Color Name">
+                                                </div>
+                                            </div>
+
+                                           
+                                            <div class="mb-4 row align-items-center">
+                                            
+                                                <div class="col-sm-10">
+                                                    <button type="submit" name="size_form" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        
+                
+
+                                           
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- New Product Add End -->
+
+       
+    </div>
+
+
+</div>
+{% endblock %}

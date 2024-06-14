@@ -1,0 +1,7 @@
+# .gitignore
+
+local_settings.py
+
+seed.py
+vercel.json
+build_files.sh

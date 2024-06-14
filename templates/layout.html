@@ -1,0 +1,473 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %} {% endblock %}
+    
+    </title>
+    <meta name="description" content="Philos Template" />
+    <meta name="keywords" content="philos, WooCommerce, bootstrap, html template, philos template">
+    <meta name="author" content="philos" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+
+   <!-- Favicone Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/stylex2_favicon.ico' %}">
+    <link rel="icon" type="img/png" href="{% static 'img/stylex2_favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/stylex2_favicon.png' %}">
+    <!-- CSS -->
+    <link href="{% static 'css/plugins/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <!-- bootstrap css -->
+    <link href="{% static 'css/plugins/font-awesome.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- fontawesome css -->
+    <link href="{% static 'css/plugins/animate.css' %}" rel="stylesheet" type="text/css" />
+    <!-- animate css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <!-- template css -->
+    <link href="{% static 'plugins/rev_slider/css/settings-ver.5.3.1.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Slider Revolution Css Setting -->
+    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> {% endcomment %}
+
+
+</head>
+<body>
+<!-- 
+    Newsletter Popup ->
+    <!--
+
+       <section id="nlpopup" data-expires="30" data-delay="10">
+        Close Button
+        <a href="javascript:void(0)" class="nlpopup_close nlpopup_close_icon">
+            <img src="img/close-icon-white.png" alt="Newsletter Close" /></a>
+        End Close Buttons
+
+        <h3 class="mb-40">Join Our Mailing List </h3>
+        <p class="black mb-20">
+            But I must explain to you how all this mistaken<br />
+            idea of denouncing pleasure pain.
+        </p>
+        <form>
+            <input class="input-md" name="footeremail" title="Enter Email Address.." placeholder="example@domain.com" type="email">
+            <button class="btn btn-md btn-color">Subscribe</button>
+        </form>
+        <label class="mt-20">
+            Sign up For Exclusive Updates, New Arrivals<br />
+            And Insider-Only Discount.</label>
+        <a class="nlpopup_close nlpopup_close_link mt-40">&#10006; Close</a>
+    </section>-->
+    <!-- Overlay -->
+    <!-- <div id="nlpopup_overlay"></div> -->
+    <!-- End Newsletter Popup -->
+
+    <!-- Sidebar Menu (Cart Menu) -->
+    <section id="sidebar-right" class="sidebar-menu sidebar-right">
+        <div class="cart-sidebar-wrap">
+
+            <!-- Cart Headiing -->
+            <div class="cart-widget-heading">
+                <h4>Shopping Cart</h4>
+                <!-- Close Icon -->
+                <a href="javascript:void(0)" id="sidebar_close_icon" class="close-icon-white"></a>
+                <!-- End Close Icon -->
+            </div>
+            <!-- End Cart Headiing -->
+
+            <!-- Cart Product Content -->
+            <div class="cart-widget-content">
+                <div class="cart-widget-product ">
+
+                    <!-- Empty Cart -->
+                    <div class="cart-empty">
+                        <p>You have no items in your shopping cart.</p>
+                    </div>
+                    <!-- EndEmpty Cart -->
+
+                    <!-- Cart Products -->
+                    <ul class="cart-product-item">
+
+                        <!-- Item -->
+                        <li>
+                            <!--Item Image-->
+                            <a href="#" class="product-image">
+                                <img src="{% static 'img/product-img/small/product_12547554.jpg' %} " alt="" /></a>
+
+                            <!--Item Content-->
+                            <div class="product-content">
+                                <!-- Item Linkcollateral -->
+                                <a class="product-link" href="#">Alpha Block Black Polo T-Shirt</a>
+
+                                <!-- Item Cart Totle -->
+                                <div class="cart-collateral">
+                                    <span class="qty-cart">1</span>&nbsp;<span>&#215;</span>&nbsp;<span class="product-price-amount"><span class="currency-sign">$</span>399.00</span>
+                                </div>
+
+                                <!-- Item Remove Icon -->
+                                <a class="product-remove" href="javascript:void(0)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <!-- End Cart Products -->
+
+                </div>
+            </div>
+            <!-- End Cart Product Content -->
+
+            <!-- Cart Footer -->
+            <div class="cart-widget-footer">
+                <div class="cart-footer-inner">
+
+                    <!-- Cart Total -->
+                    <h4 class="cart-total-hedding normal"><span>Total :</span><span class="cart-total-price">$698.00</span></h4>
+                    <!-- Cart Total -->
+
+                    <!-- Cart Buttons -->
+                    <div class="cart-action-buttons">
+                        <a href="cart.html" class="view-cart btn btn-md btn-gray">View Cart</a>
+                        <a href="checkout.html" class="checkout btn btn-md btn-color">Checkout</a>
+                    </div>
+                    <!-- End Cart Buttons -->
+
+                </div>
+            </div>
+            <!-- Cart Footer -->
+        </div>
+    </section>
+    <!--Overlay-->
+    <div class="sidebar_overlay"></div>
+    <!-- End Sidebar Menu (Cart Menu) -------------------------------------------->
+
+    <!-- Search Overlay Menu ----------------------------------------------------->
+    <section class="search-overlay-menu">
+        <!-- Close Icon -->
+        <a href="javascript:void(0)" class="search-overlay-close"></a>
+        <!-- End Close Icon -->
+        <div class="container">
+            <!-- Search Form -->
+            <form  action="{% url "search" %}" method="get">
+                <div class="search-icon-lg">
+                    <img src="{% static 'img/search-icon-lg.png' %}" alt="" />
+                </div>
+                <label class="h6 normal search-input-label" for="search-query">Enter keywords to Search Product</label>
+               
+                    <input type="text" name="search_box" placeholder="Search...">
+                <button type="submit">
+                    <img src="{% static "img/search-icon-lg.png" %}" alt="" />
+                </button>
+             
+            </form>
+            <!-- End Search Form -->
+
+        </div>
+    </section>
+    <!-- End Search Overlay Menu -->
+
+    <!--==========================================-->
+    <!-- wrapper -->
+    <!--==========================================-->
+    <div class="wraper">
+        <!-- Header -->
+        <header class="header">
+            <!--Topbar-->
+            <div class="header-topbar">
+                <div class="header-topbar-inner">
+                    <!--Topbar Left-->
+                    <div class="topbar-left hidden-sm-down">
+                        <div class="phone" style="color: #34b79d; font-weight: 400;">Welcome to StyleX</div>
+                    </div>
+                    <!--End Topbar Left-->
+
+                    <!--Topbar Right-->
+                    <div class="topbar-right">
+
+                        <ul class="list-none">
+                            {% if 'user' not in request.session %}
+                            <li>
+                                <a href="{% url "login" %}"><i class="fa fa-lock left" aria-hidden="true"></i><span class="hidden-sm-down">Login</span></a>
+                            </li>
+                            {% endif %}
+                            <li class="dropdown-nav">
+                                <a href=""><i class="fa fa-user left" aria-hidden="true"></i><span class="hidden-sm-down">{{ user.name }}</span><i class="fa fa-angle-down right" aria-hidden="true"></i></a>
+                                <!--Dropdown-->
+                                {% if 'user'  in request.session %}
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        
+                                        
+                                        <li class="dropdown-nav">
+                                            <a href="/order_history"><i class="fa fa-history" aria-hidden="true"></i><span class="hidden-sm-down">Order History</span></a>
+                                        </li>
+                                        
+                                        <li class="dropdown-nav">
+                                            <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-sm-down">Logout</span></a>
+                                        </li>
+                                        
+                                    </ul>   
+                                </div>
+                                {% endif %}
+
+                                <!--End Dropdown-->
+                            </li>
+                            <li class="dropdown-nav">
+                                <a href="#">
+                                    {% if request.session.currency %}
+                                
+                                    {{ request.session.currency }}
+                                    {% else %}
+                                    INR
+                                    {% endif %}
+                                    <i class="fa fa-angle-down right" aria-hidden="true"></i></a>
+                                <!--Dropdown-->
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        <li><a href="?currency=USD">USD</a></li>
+                                        <li><a href="?currency=INR">INR</a></li>
+                                    </ul>
+                                </div>
+                                <!--End Dropdown-->
+                            </li>
+                          
+                        </ul>
+                    </div>
+                    <!-- End Topbar Right -->
+                </div>
+            </div>
+            <!--End Topbart-->
+
+            <!-- Header Container -->
+            <div id="header-sticky" class="header-main">
+                <div class="header-main-inner">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="{% url "home" %}">
+                            
+                            
+                            <img src="{% static 'img/stylex2.png' %}" alt="StyleX" />
+                        </a>
+                    </div>
+                    <!-- End Logo -->
+
+
+                    <!-- Right Sidebar Nav -->
+                    <div class="header-rightside-nav">
+                        <!-- Login-Register Link -->
+                        {% comment %} <div class="header-btn-link hidden-lg-down"><a href="#" class="btn btn-sm btn-color">Buy Now</a></div> {% endcomment %}
+                        <!-- End Login-Register Link -->
+
+                        <!-- Sidebar Icon -->
+                        <div class="sidebar-icon-nav">
+                            <ul class="list-none-ib">
+                                <!-- Search-->
+                                <li><a id="search-overlay-menu-btn"><i aria-hidden="true" class="fa fa-search"></i></a></li>
+                                <!-- Whishlist-->
+                                {% comment %} <li><a class="js_whishlist-btn"><i aria-hidden="true" class="fa fa-heart"></i><span class="countTip">10</span></a></li> {% endcomment %}
+                                <!-- Cart-->
+                                <li><a href="{% url "cart" %}">
+                                    <div class="cart-icon">
+                                        <i aria-hidden="true" class="fa fa-shopping-bag"></i>
+                                        <span class="countTip">
+                                            {% if total_items > 0 %}
+                                                {{ total_items }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </a></li>
+                            </ul>
+                        </div>
+                        <!-- End Sidebar Icon -->
+                    </div>
+                    <!-- End Right Sidebar Nav -->
+
+
+                    <!-- Navigation Menu -->
+                    <nav class="navigation-menu">
+                        <ul>
+                            <li>
+                                <a href="{% url "home" %}">Home</a>
+                            </li>
+                            <li>
+                                <a href="/man/">Man</a>
+                            </li>
+                            <li>
+                                <a href="/woman/">Women</a>
+                               
+                            </li>
+                            <li>
+                                <a href="/kids/">Kids</a>
+                               
+                            </li>
+                        
+{% comment %} 
+                            <li>
+                                <a href="/about">About</a>
+                            </li> {% endcomment %}
+                            <li>
+                                <a href="/contact">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- End Navigation Menu -->
+
+                </div>
+            </div>
+            <!-- End Header Container -->
+        </header>
+        <!-- End Header -->
+
+        {% block body %} {% endblock %}
+
+        <footer class="footer section-padding">
+            <!-- Footer Info -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-12 col-sm-12 mb-sm-45">
+                        <div class="footer-block about-us-block">
+                            <img src="{% static "img/stylex2.png" %}" width="125" alt="">
+                            <p>
+                                Elevate your style with Styelx: Where fashion meets innovation. Shop the latest trends effortlessly!
+                            </p>
+                            <ul class="footer-social-icon list-none-ib">
+                                <li><a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12 mb-sm-45">
+                        <div class="footer-block information-block">
+                            <h6>Information</h6>
+                            <ul>
+                                <li><a href="/man/">MAN</a></li>
+                                <li><a href="/woman/">WOMAN</a></li>
+                                <li><a href="/kids/">KIDS</a></li>
+                                {% comment %} <li><a href="/about">About Us</a></li> {% endcomment %}
+                                <li><a href="/contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                   
+                    <div class="col-lg-3 col-md-12 col-sm-12">
+                        <div class="footer-block contact-block">
+                            <h6>Contact</h6>
+                            <ul>
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i>StyleX Fashion, Ahmdabad
+                                    <br>
+                                    Gujarat, India</li>
+                                    
+                                <li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:info@sky.com">md.tach18@gmail.com</a></li>
+                                <li><i class="fa fa-phone" aria-hidden="true"></i>+91 90167555950</li>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12">
+                        <div class="footer-block contact-block">
+                           
+                            <div class="four col-md-3">
+                                <div class="counter-box">
+                                    <i class="fa fa-group ls" ></i>
+                                    <span class="counter">{{visitor}}</span>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer Info -->
+
+        <style>
+            .counter-box {
+                display: block;
+             
+                text-align: center
+                
+            }
+            .ls{ 
+                padding-left: 30px;
+                color: #34b79d !important;
+            }
+            
+            .counter-box p {
+                margin: 5px 0 0;
+                padding: 0;
+                color: #acacac;
+                font-size: 18px;
+                font-weight: 500
+            }
+            
+            .counter-box i {
+                font-size: 60px;
+                margin: 0 0 15px;
+               
+            }
+            
+            .counter { 
+                display: block;
+                font-size: 32px;
+                font-weight: 700;
+                padding-left: 40px;
+                color: #acacac;
+                line-height: 28px
+            }
+            
+         
+        </style>
+
+            <!-- Footer Copyright -->
+            <div class="container">
+                <div class="copyrights">
+                    <p class="copyright m-4 ">&copy; Created by <a href="https://mdakbari.github.io/" target="_blank">Manthan Akbari</a></p>
+                    
+                </div>
+            </div>
+            <!-- End Footer Copyright -->
+        </footer>
+               <!-- End Footer Section -------------->
+
+    </div>
+    <!-- End wrapper =============================-->
+
+    <!--==========================================-->
+    <!-- JAVASCRIPT -->
+    <!--==========================================-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/plugins/jquery-ui.js'%}"></script>
+    <!-- jquery library js -->
+    <script type="text/javascript" src="{% static 'js/plugins/modernizr.js' %}"></script>
+    <!--modernizr Js-->
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/jquery.themepunch.revolution.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/jquery.themepunch.tools.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/revolution.extension.navigation.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/revolution.extension.parallax.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/revolution.extension.slideanims.min.js'%}"></script>
+    <script type="text/javascript" src="{% static 'plugins/rev_slider/js/revolution.extension.layeranimation.min.js'%}"></script>
+    <!--Slider Revolution Js File-->
+    <script type="text/javascript" src="{% static 'js/plugins/tether.min.js'%}"></script>
+    <!--Bootstrap tooltips require Tether (Tether Js)-->
+    <script type="text/javascript" src="{% static 'js/plugins/bootstrap.min.js'%}"></script>
+    <!-- bootstrap js -->
+    <script type="text/javascript" src="{% static 'js/plugins/owl.carousel.js'%}"></script>
+    <!-- OWL carousel js -->
+    <script type="text/javascript" src="{% static 'js/plugins/slick.js'%}"></script>
+    <!-- Slick Slider js -->
+    <script type="text/javascript" src="{% static 'js/plugins/plugins-all.js'%}"></script>
+    <!-- Plugins All js -->
+    <script type="text/javascript" src="{% static 'js/custom.js'%}"></script>
+    
+    <!-- custom js -->
+    <!-- end jquery -->
+
+
+
+
+</body>
+</html>

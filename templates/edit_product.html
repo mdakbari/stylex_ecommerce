@@ -1,0 +1,148 @@
+{% extends 'admin_layout.html' %}
+{% load static %}
+{% block title %}Add Product{% endblock %}
+
+{% block body %}
+<div class="page-body-wrapper">
+
+
+    <div class="page-body">
+        <div class="title-header">
+            <h5>Add New Product</h5>
+        </div>
+
+        <!-- New Product Add Start -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            
+
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Add SubProduct</h5>
+                                    </div>
+
+                                {% comment %} {% elif model_name == 'sub_product' %} {% endcomment %}
+                                    <form class="theme-form theme-form-2 mega-form"  method="post" action="{% url 'edit_product' product.id %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Product</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="product" id="select_product" onchange="getsize()">
+                                                        <option value="{{product.product.id}}">{{product.product.name}}</option>
+                                                  
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Product Description</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control" type="text" name="description" placeholder="Product Name" value="{{ product.description }}">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Images</label>
+                                                <div class="col-sm-10">
+                                                    <input class="form-control form-choose" type="file" name="images" id="formFileMultiple" multiple>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4 row align-items-center">
+                                                <label class="col-sm-2 col-form-label form-label-title">Product</label>
+                                                <div class="col-sm-10">
+                                                    <select class="js-example-basic-single w-100" name="productsize"  id="select_size" multiple>
+
+                                                        <option value="">Selcet Size</option>
+                                                        {% for size in sizes %}
+                                                            {% if size in product.product_size_color.all %}
+                                                                <option value="{{ size.pk }}" selected>{{ size.name }}</option>
+                                                                {% else %}
+                                                                <option value="{{ size.pk }}">{{ size.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                      
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                                 <div class="mb-4 row align-items-center">
+                                            
+                                                    <div class="col-sm-10">
+                                                        <button type="submit" name="sub_product_form" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                           
+                                        </div>
+                                                                    
+                                    </form>
+                                {% comment %} {% endif %} {% endcomment %}
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- New Product Add End -->
+
+        <!-- footer Start -->
+        <div class="container-fluid">
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-md-12 footer-copyright text-center">
+                        <p class="mb-0">Copyright 2021 © Voxo theme by pixelstrap</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- footer En -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+        getsize();
+    });
+
+    function getsize() {
+        var selectedProductId = $('#select_product').val();
+        var selectedSizeIds = $('#select_size').val(); 
+    
+        $.ajax({
+            url: '/edit_product_sizencolor/',
+            method: 'POST',
+            data: {
+                'id': selectedProductId,
+                'selected_sizes': selectedSizeIds  
+            },
+            success: function (data) {
+                var t = data.list;
+                $('#select_size').html('');
+    
+                for (var i = 0; i < t.length; i++) {
+                    var x = ['<option value="', t[i].id, '">', t[i].product_name, '</option>'].join('');
+                    $('#select_size').append(x);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,300 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}StyleX - {{category}} {% endblock %}
+
+{% block body %}
+    
+
+<script>
+    function showSuccessMessage() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Item added to cart',
+            showConfirmButton: false,
+            timer: 100000
+        });
+    }
+</script>
+
+<style>
+    .img{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+     
+    
+    }
+</style>
+
+<div class="wraper">
+    <div class="page-content-wraper">
+        <!-- Bread Crumb -->
+        <section class="breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="breadcrumb-link">
+                            <a href="#">Home</a>
+                            <span>{{category}}</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Bread Crumb -->
+
+        <!-- Page Content -->
+        <section class="content-page">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Product Content -->
+                    <div class="col-12">
+                        <!-- Title -->
+                        <div class="list-page-title">
+                            <h2 class="">{{category}} Section <small>{{product_length}} Products</small></h2>
+                        </div>
+                        <!-- End Title -->
+
+                        <!-- Product Filter -->
+                        <div class="product-filter-content">
+                            <div class="product-filter-content-inner">
+
+                                <!--Product Filter Button-->
+                                
+                                <!--Product Sort By-->
+
+
+
+                                <!--Product List/Grid Icon-->
+                                <div class="product-view-switcher">
+                                    <label>View</label>
+                                    <div class="product-view-icon product-grid-switcher product-view-icon-active">
+                                        <a class="" href="#"><i class="fa fa-th" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="product-view-icon product-list-switcher">
+                                        <a class="" href="#"><i class="fa fa-th-list" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- End Product Filter -->
+
+                        <!-- Product filters Toggle-->
+                        <div class="container product-filter-dropdown toggle-content" id="filter-slide-toggle">
+                            <div class="row col mlr-0">
+                                <!-- Shop Categories -->
+                                <div class="widget-sidebar col-sm-6 col-md-6 col-lg-3">
+                                    <h6 class="widget-title">Categories</h6>
+                                    <ul class="widget-content widget-product-categories jq-accordian">
+                                        <li>
+                                            <a href="#">Accessories</a>
+                                        </li>
+                                        <li>
+                                            <a class="javascript:void(0)">Clothings<span class="jq-accordionIcon"></span></a>
+                                            <ul class="children" style="display: none;">
+                                                <li><a href="#">All</a></li>
+                                                <li><a href="#">Coats &amp; Jackets</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">Sportswear</a></li>
+                                                <li><a href="#">Swimwear</a></li>
+                                                <li><a href="#">Trousers</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Man<span class="jq-accordionIcon"></span></a>
+                                            <ul style="display: none;">
+                                                <li><a href="#">All</a></li>
+                                                <li><a href="#">Coats &amp; Jackets</a></li>
+                                                <li><a href="#">Shirts</a></li>
+                                                <li><a href="#">Sportswear</a></li>
+                                                <li><a href="#">Swimwear</a></li>
+                                                <li><a href="#">Trousers</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Jacket</a></li>
+                                        <li><a href="#">New arrivals</a></li>
+                                        <li><a href="#">Shoes</a></li>
+                                        <li><a href="sdsd.html">Socks</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End Shop Categories -->
+
+                                <!-- Filter Price -->
+                                <div class="widget-sidebar widget-filter-price col-sm-6 col-md-6 col-lg-3">
+                                    <h6 class="widget-title">Select Price</h6>
+                                    <ul class="widget-content">
+                                        <li>
+                                            <a href="#">All</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>0.00</span>
+                                                -
+                                            <span class="amount"><span class="currencySymbol">$</span>500.00</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>500.00</span>
+                                                -
+                                            <span class="amount"><span class="currencySymbol">$</span>1100.00</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>1100.00</span>
+                                                -
+                                            <span class="amount"><span class="currencySymbol">$</span>1600.00</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>1600.00</span>
+                                                -
+                                            <span class="amount"><span class="currencySymbol">$</span>2100.00</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>2100.00</span>
+                                                -
+                                            <span class="amount"><span class="currencySymbol">$</span>2600.00</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span class="amount"><span class="currencySymbol">$</span>2600.00</span>
+                                                +
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End Filter Price -->
+
+                            </div>
+                        </div>
+                        <!-- End Product filters Toggle-->
+
+                        <!-- Product Grid -->
+                        <div class="row product-list-item">
+                            {% if product_length > 0 %}
+                            {% for pro in products %}
+                            <!-- item.1 -->
+                            <div class="product-item-element col-sm-6 col-md-4 col-lg-3">
+                                <!--Product Item-->
+                                <div class="product-item">
+                                    <div class="product-item-inner">
+                                        <div class="product-img-wrap sectionimg">
+                                            <a href="{% url 'show_product' pro.id %}"  >
+                                            <img src="{{ pro.image }}"  alt="">
+                                        </a>
+                                        </div>
+
+                                        <style>
+                                            .sectionimg{
+                                                height: 255px !important;
+                                                width: 255px !important;
+                                            }
+                                        </style>
+                                        <div class="product-button">
+                                            <form action="{% url 'addcart' pro.id %}" method="POST">
+                                                {% csrf_token %}         
+                                                
+                                                <input type="hidden" name="source_view" value="section">                                       
+                                                <button type="submit"  data-mode="top" name="sort_addcart" id="sbtn" onclick="showSuccessMessage()"  class="js_tooltip"  data-tip="Add To Cart"><i class="fa fa-shopping-bag"></i></button>
+                                            </form>
+                                            {% comment %} <a href="" class="js_tooltip" data-mode="top"><i class="fa fa-shopping-bag"></i></a> {% endcomment %}
+                                            {% comment %} <a href="#" class="js_tooltip" data-tip="Add To Whishlist"><i class="fa fa-heart"></i></a> {% endcomment %}
+
+                                            <style>
+                                                #sbtn{
+                                                border: none;
+                                                outline: none;
+                                                background-color: transparent !important;
+
+                                                }
+
+                                            </style>
+                                        </div>
+                                    </div>
+                                    <div class="product-detail">
+                                        <a class="tag" href="#">{{ pro.product.category.name }}</a>
+                                        <p class="product-title"><a href="product_detail.html">{{ pro.product.name }}</a></p>
+                                        <div class="product-rating">
+                                            <div class="star-rating" itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating" title="Rated 4 out of 5">
+                                                <span style="width: 60%"></span>
+                                            </div>
+                                            <a href="#" class="product-rating-count"><span class="count">3</span> Reviews</a>
+                                        </div>
+                                        <p class="product-description">
+                                            {{ pro.product.description }}
+                                        </p>
+                                            {% comment %} <h5 class="item-price">₹{{ pro.product.price }}</h5> {% endcomment %}
+                                                
+                                            <h5 class="item-price">
+                                                {% if 'USD' in request.session.currency %}
+                                                $ {{ pro.product.price_usd|floatformat:2 }}
+                                            {% else %}
+                                                ₹ {{ pro.product.price_usd|floatformat:2 }}
+                                            {% endif %}
+                                        </div>
+                                    
+                                </div>
+                                <!-- End Product Item-->
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="col-12 img">
+                                <img src="{% static 'img/Dressing room.gif' %}" alt="Emgpty" style="width: 100; height: 100;    display: flex; justify-content: center; align-items: center;">
+                            </div>
+                            {% endif %}
+
+
+
+                            <!-- item.2 -->
+
+                        </div>
+                        <!-- End Product Grid -->
+                       
+<!--
+                        <div class="pagination-wrapper">
+                            <div class="pagination">
+                                <ul class="pagination-numbers">
+                                    <li>
+                                        <a href="#" class="prev page-number" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span> 
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <span class="current-page">1</span>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="next page-number" aria-label="Next">
+                                             <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+-->      
+                    </div>
+
+                    <!-- End Product Content -->
+
+                </div>
+            </div>
+        </section>
+        <!-- End Page Content -->
+
+          <!-- Include SweetAlert CSS and JS -->
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -101,7 +101,7 @@ git clone https://github.com/mdakbari/stylex_ecommerce.git
 
 > 👉 **Step 2** - Navigate to the project directory:
 ```bash
-cd stylex
+cd stylex_ecommerce
 ```
 Note: If you are using a virtual environment, activate it before installing the packages.
 

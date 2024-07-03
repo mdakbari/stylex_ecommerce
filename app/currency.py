@@ -1,8 +1,9 @@
 import everapi
+from local_settings import apikey
 
 # akhu badu band  karvu padse ..
 class Client(everapi.Client):
-    def __init__(self, api_key, base='https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_YmDDOQ53V2ORAoTPnzY4M8vJOBhlmqbFi6NNmUBp'):
+    def __init__(self, api_key, base=f'https://api.freecurrencyapi.com/v1/latest?apikey={apikey}'):
         super(Client, self).__init__(base, api_key)
 
     def status(self):
